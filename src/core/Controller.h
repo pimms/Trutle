@@ -2,6 +2,7 @@
 #define TRUTLE_HEADER
 
 #include "../Trutle.h"
+#include "CommitPtr.h"
 
 class Scene;
 class Renderer;
@@ -15,7 +16,8 @@ public:
 	virtual void 		LoadContent();
 
 	void 				SetScene(Scene *scene);
-	void 				SceneTransition();
+	Scene* 				GetScene();
+	virtual void 		SceneTransition();
 
 	virtual void 		Update(const DeltaTime &delta);
 
@@ -24,8 +26,7 @@ protected:
 	virtual void 		DrawScene();
 
 	Renderer 			*mRenderer;
-	Scene 				*mScene;
-	Scene 				*mNewScene;
+	CommitPtr<Scene> 	mScene;
 
 private:
 

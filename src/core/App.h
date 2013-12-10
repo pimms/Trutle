@@ -4,6 +4,8 @@
 #include "../Trutle.h"
 #include "Window.h"
 #include "EventDispatcher.h"
+#include "Stack.h"
+#include "CommitPtr.h"
 
 class Renderer;
 class Controller;
@@ -32,7 +34,7 @@ private:
 
 	Window 					mWindow;
 	EventDispatcher 		mEventDispatcher;
-	Controller 				*mController;
+	CommitPtr<Controller> 	mController;
 };
 
 #undef TRUTLE_HEADER

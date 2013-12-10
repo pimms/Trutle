@@ -3,27 +3,23 @@
 #include "Controller.h"
 
 
+/***** Public Methods *****/
 App::App() {
 	mController = NULL;
 }
 
 App::~App() {
-	if (mController) {
-		delete mController;
-	}
+
 }
 
 void App::SetController(Controller *controller) {
-	if (mController) {
-		delete mController;
-	}
-
 	mController = controller;
 }
 
 Controller* App::GetController() {
 	if (!mController) {
 		mController = new Controller();
+		mController.Commit();
 	}
 
 	return mController;
@@ -104,7 +100,9 @@ bool App::MainLoop() {
 		mController->Update(deltaTime);
 		mWindow.FlipBuffer();
 
-		mController->SceneTransition();
+		if (mController.Commit()) {
+			mController->LoadContent();
+		}
 	}
 
 	return true;

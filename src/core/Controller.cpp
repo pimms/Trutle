@@ -9,10 +9,6 @@ Controller::Controller() {
 }
 
 Controller::~Controller() {
-	if (mScene) {
-		delete mScene;
-	}
-
 	if (mRenderer) {
 		delete mRenderer;
 	}
@@ -23,22 +19,21 @@ void Controller::LoadContent() {
 }
 
 void Controller::SetScene(Scene *scene) {
-	if (mNewScene) {
-		delete mNewScene;
-	}
+	mScene = scene;
 
-	mNewScene = scene;
+	// This only makes sense because mScene is 
+	// a CommitPtr.
+	if (!mScene) {
+		mScene.Commit();
+	}
+}
+
+Scene* Controller::GetScene() {
+	return mScene;
 }
 
 void Controller::SceneTransition() {
-	if (mNewScene) {
-		if (mScene) {
-			delete mScene;
-		}
-
-		mScene = mNewScene;
-		mNewScene = NULL;
-	}
+	mScene.Commit();
 }
 
 void Controller::Update(const DeltaTime &delta) {
@@ -52,5 +47,7 @@ Renderer* Controller::CreateRenderer() {
 }
 
 void Controller::DrawScene() {
-	mRenderer->RenderFrame(mScene);
+	if (mScene) {
+		mRenderer->RenderFrame(mScene);
+	}
 }

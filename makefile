@@ -1,7 +1,7 @@
 CXX = g++
 INC =
 LIBS = -lSDL2 -lSDL2main -lGL -lglut -lGLEW -lSDL2_image
-FLG = -std=gnu++0x -g -D TRUTLE_COMPILE
+FLG = -std=gnu++11 -g -D TRUTLE_COMPILE
 
 SRCDIR = src/
 OBJDIR = obj/
