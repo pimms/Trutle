@@ -22,6 +22,7 @@
 #include <map>
 #include <array>
 #include <deque>
+#include <list>
 #include <fstream>
 #include <string>
 
@@ -34,3 +35,14 @@
 #	include "core/Vec2.h"
 #	include "core/Renderer.h"
 #endif
+
+
+/* Struct used when updating
+ * GameObjects.
+ */
+struct DeltaTime {
+	/* The time since the last Update-call
+	 * in seconds.
+	 */
+	float dt;
+};
