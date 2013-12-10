@@ -17,7 +17,7 @@ OBJ = $(subst .cpp,.o,$(SRC))
 
 all: $(OBJ)
 	@echo "LINK $(OUT)"
-	ar rvs $(LIBTARGET) $(OBJS)
+	ar rvs $(LIBTARGET) $(OBJ)
 	@mkdir -p $(BUILDDIR)include
 	@cd src && find -name '*.h' -print | cpio -pdlv ../$(BUILDDIR)include 2>/dev/null
 
