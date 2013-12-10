@@ -1,15 +1,32 @@
 #include "App.h"
 #include "Renderer.h"
+#include "Controller.h"
 
 
 App::App() {
-	mRenderer = NULL;
+	mController = NULL;
 }
 
 App::~App() {
-	if (mRenderer) {
-		delete mRenderer;
+	if (mController) {
+		delete mController;
 	}
+}
+
+void App::SetController(Controller *controller) {
+	if (mController) {
+		delete mController;
+	}
+
+	mController = controller;
+}
+
+Controller* App::GetController() {
+	if (!mController) {
+		mController = new Controller();
+	}
+
+	return mController;
 }
 
 int App::Run(int argc, char *argv[]) {
@@ -21,6 +38,10 @@ int App::Run(int argc, char *argv[]) {
 	if (!InitApplication(argc, argv)) {
 		printf("Custom initialization failed\n");
 		return -3;
+	}
+
+	if (!mController) {
+		mController = new Controller();
 	}
 
 	if (!MainLoop()) {
@@ -41,10 +62,6 @@ bool App::InitApplication(int argc, char *argv[]) {
 	return true;
 }
 
-Renderer* App::CreateRenderer() {
-	return new Renderer();
-}
-
 
 /***** Private Methods *****/
 bool App::Init() {
@@ -59,7 +76,6 @@ bool App::Init() {
 	}
 
 	mWindow.SetTitle(GetWindowTitle());
-	mRenderer = CreateRenderer();
 
 	return true;
 }
@@ -81,11 +97,14 @@ bool App::InitSDL() {
 }
 
 bool App::MainLoop() {
+	DeltaTime deltaTime = { 0.0016f };
+
 	while (!mEventDispatcher.ShouldQuit()) {
 		mEventDispatcher.DispatchEvents();
-		
-		mRenderer->RenderFrame(NULL);
+		mController->Update(deltaTime);
 		mWindow.FlipBuffer();
+
+		mController->SceneTransition();
 	}
 
 	return true;

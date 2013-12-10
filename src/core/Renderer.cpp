@@ -1,5 +1,6 @@
 #include "Renderer.h"
 #include "Vec2.h"
+#include "../node/GameObject.h"
 
 
 Renderer::~Renderer() {
@@ -27,4 +28,18 @@ bool Renderer::Init(Vec2 coordBounds) {
 
 void Renderer::RenderFrame(Scene *scene) {
 	glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void Renderer::PushTransform() {
+	glPushMatrix();
+}
+
+void Renderer::ApplyTransform(GameObject *object) {
+	Vec2 v = object->Position();
+	glTranslatef(v.x, v.y, 0.f);
+	glRotatef(object->Rotation(), 0.f, 0.f, 1.f);
+}
+
+void Renderer::PopTransform() {
+	glPopMatrix();
 }

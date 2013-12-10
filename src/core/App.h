@@ -6,6 +6,7 @@
 #include "EventDispatcher.h"
 
 class Renderer;
+class Controller;
 using std::string;
 
 
@@ -14,14 +15,14 @@ public:
 							App();
 	virtual 				~App();
 
+	void 					SetController(Controller *controller);
+	Controller* 			GetController();
+
 	int 					Run(int argc, char *argv[]);
 
 protected:
 	virtual std::string 	GetWindowTitle();
 	virtual bool 			InitApplication(int argc, char **argv);
-	virtual Renderer*		CreateRenderer();
-
-	Renderer 				*mRenderer;
 
 private:
 	bool 					Init();
@@ -31,6 +32,7 @@ private:
 
 	Window 					mWindow;
 	EventDispatcher 		mEventDispatcher;
+	Controller 				*mController;
 };
 
 #undef TRUTLE_HEADER
