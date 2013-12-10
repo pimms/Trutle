@@ -6,7 +6,7 @@ Renderer::~Renderer() {
 
 }
 
-bool Init(Vec2 coordBounds) {
+bool Renderer::Init(Vec2 coordBounds) {
 	glClearColor(0.f, 0.f, 0.f ,1.f);
 
 	glDisable(GL_DEPTH_TEST);
@@ -25,6 +25,6 @@ bool Init(Vec2 coordBounds) {
 	return true;
 }
 
-void RenderFrame(Scene *scene) {
+void Renderer::RenderFrame(Scene *scene) {
 	glClear(GL_COLOR_BUFFER_BIT);
 }

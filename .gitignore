@@ -17,3 +17,6 @@ build/
 
 # Sublime project files
 *.sublime-*
+
+# Sample binaries
+sample
