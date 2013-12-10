@@ -2,9 +2,11 @@
 #define TRUTLE_HEADER
 
 #include "../Trutle.h"
+#include "Geometry.h"
 
 class Vec2;
 class Scene;
+class Texture;
 class GameObject;
 
 
@@ -17,6 +19,8 @@ public:
 	virtual void 		PushTransform();
 	virtual void 		ApplyTransform(GameObject *object);
 	virtual void 		PopTransform();
+
+	virtual void 		RenderTexture(Texture *tex, Rect pixelClip);
 
 protected:
 

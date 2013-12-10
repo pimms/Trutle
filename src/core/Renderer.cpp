@@ -1,8 +1,8 @@
 #include "Renderer.h"
-#include "Vec2.h"
 #include "../node/GameObject.h"
 #include "../node/Scene.h"
 #include "../node/Layer.h"
+#include "../res/Texture.h"
 
 
 Renderer::~Renderer() {
@@ -44,10 +44,20 @@ void Renderer::PushTransform() {
 
 void Renderer::ApplyTransform(GameObject *object) {
 	Vec2 v = object->Position();
+	Vec2 s = object->Scale();
+
 	glTranslatef(v.x, v.y, 0.f);
 	glRotatef(object->Rotation(), 0.f, 0.f, 1.f);
+	glScalef(s.x, s.y, 1.f);
 }
 
 void Renderer::PopTransform() {
 	glPopMatrix();
+}
+
+void Renderer::RenderTexture(Texture *tex, Rect clip) {
+	Rect fClip;
+
+	fClip.x = clip.x / tex->GetDimensions().x;
+	fClip.y = clip.y / tex->GetDimensions().y;
 }

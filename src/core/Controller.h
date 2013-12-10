@@ -19,12 +19,13 @@ public:
 	Scene* 				GetScene();
 	virtual void 		SceneTransition();
 
-	virtual void 		Update(const DeltaTime &delta);
+	virtual void 		Update(DeltaTime &delta);
 
 protected:
 	virtual Renderer*	CreateRenderer();
 	virtual Scene* 		CreateDefaultScene();
 	virtual void 		DrawScene();
+	virtual void 		DispatchUpdate(DeltaTime &delta);
 
 	Renderer 			*mRenderer;
 	CommitPtr<Scene> 	mScene;

@@ -1,6 +1,7 @@
 #include "App.h"
 #include "Renderer.h"
 #include "Controller.h"
+#include "../res/ResourceManager.h"
 
 
 /***** Public Methods *****/
@@ -47,12 +48,16 @@ int App::Run(int argc, char *argv[]) {
 
 	mController->LoadContent();
 
+	int status = 0;
+
 	if (!MainLoop()) {
 		printf("Game loop terminated\n");
-		return -4;
+		status = -4;
 	}
 
-	return 0;
+	ResourceManager::Purge();
+
+	return status;
 }
 
 

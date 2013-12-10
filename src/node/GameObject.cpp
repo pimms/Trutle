@@ -1,13 +1,39 @@
 #include "GameObject.h"
 #include "../core/Renderer.h"
+#include "../res/ResourceManager.h"
+#include "../res/Texture.h"
 
 
 GameObject::GameObject() {
 	mRotation = 0.f;
+	mTexture = NULL;
 }
 
 GameObject::~GameObject() {
+	ReleaseTexture();
 
+	ChildIter iter = mChildren.begin();
+	while (iter != mChildren.end()) {
+		delete *iter;
+		iter++;
+	}
+}
+
+void GameObject::LoadTexture(std::string texfile) {
+	ReleaseTexture();
+
+	mTexture = (Texture*)ResourceManager::
+						GetResource(texfile, Resource::TEXTURE);
+}
+
+void GameObject::UpdateSelfAndChildren(const DeltaTime &delta) {
+	Update(delta);
+
+	ChildIter iter = mChildren.begin();
+	while (iter != mChildren.end()) {
+		(*iter)->UpdateSelfAndChildren(delta);
+		iter++;
+	}
 }
 
 void GameObject::Update(const DeltaTime &delta) {
@@ -50,4 +76,17 @@ void GameObject::AddChild(GameObject *object) {
 
 void GameObject::RemoveChild(GameObject *object) {
 	mChildren.remove(object);
+}
+
+ChildList* GameObject::GetChildren() {
+	return &mChildren;
+}
+
+
+/***** Private Methods *****/
+void GameObject::ReleaseTexture() {
+	if (mTexture) {
+		mTexture->Release();
+		mTexture = NULL;
+	}
 }

@@ -2,7 +2,7 @@
 #define TRUTLE_HEADER
 
 #include "../Trutle.h"
-#include "Vec2.h"
+#include "Geometry.h"
 
 class Vec2;
 

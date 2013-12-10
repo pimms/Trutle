@@ -6,7 +6,7 @@
 
 class Layer : public GameObject {
 public:
-
+	
 protected:
 
 private:

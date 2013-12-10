@@ -1,5 +1,14 @@
 #include <trutle/Trutle.h>
 
+
+class Fuck : public GameObject {
+public:
+	void Update(const DeltaTime &dt) {
+		mRotation += 1.f;
+	}
+};
+
+
 int main(int argc, char *argv[]) {
 	App app;
 
@@ -9,11 +18,11 @@ int main(int argc, char *argv[]) {
 	Layer *layer = new Layer();
 	scene->AddLayer(layer);
 
-	GameObject *ob = new GameObject();
+	GameObject *ob = new Fuck();
 	ob->Position() = Vec2(100.f, 100.f);
 	layer->AddChild(ob);
 
-	GameObject *ob2 = new GameObject();
+	GameObject *ob2 = new Fuck();
 	ob2->Position() = Vec2(25.f, -30.f);
 	ob->AddChild(ob2);
 

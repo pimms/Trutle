@@ -1,7 +1,8 @@
 #include "Controller.h"
 #include "Renderer.h"
-#include "../node/Scene.h"
 #include "Vec2.h"
+#include "../node/Scene.h"
+#include "../node/Layer.h"
 
 
 Controller::Controller() {
@@ -45,7 +46,8 @@ void Controller::SceneTransition() {
 	mScene.Commit();
 }
 
-void Controller::Update(const DeltaTime &delta) {
+void Controller::Update(DeltaTime &delta) {
+	DispatchUpdate(delta);
 	DrawScene();
 }
 
@@ -66,3 +68,16 @@ void Controller::DrawScene() {
 		printf("Controller has no Scene\n");
 	}
 }
+
+void Controller::DispatchUpdate(DeltaTime &delta) {
+	LayerList *layers = &mScene->GetLayers();
+	LayerIter liter = layers->begin();
+	
+	while (liter != layers->end()) {
+		(*liter)->UpdateSelfAndChildren(delta);
+		liter++;
+	}
+}
+
+
+
