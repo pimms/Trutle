@@ -13,10 +13,6 @@ App::~App() {
 }
 
 int App::Run(int argc, char *argv[]) {
-	if (!mWindow.CreateWindow()) {
-		return -1;
-	}
-
 	if (!Init()) {
 		return -2;
 	}
@@ -49,7 +45,7 @@ Renderer* App::CreateRenderer() {
 
 /***** Private Methods *****/
 bool App::Init() {
-	if (!mWindow.CreateWindow()) {
+	if (!mWindow.CreateWindow(Vec2(640, 480))) {
 		return false;
 	}
 	mWindow.SetTitle(GetWindowTitle());
