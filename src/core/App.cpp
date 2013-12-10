@@ -38,6 +38,7 @@ int App::Run(int argc, char *argv[]) {
 
 	if (!mController) {
 		mController = new Controller();
+		mController.Commit();
 	}
 
 	if (!MainLoop()) {
