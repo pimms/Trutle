@@ -11,3 +11,9 @@
 *.lai
 *.la
 *.a
+
+# Binary folders
+build/
+
+# Sublime project files
+*.sublime-*

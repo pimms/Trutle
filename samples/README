@@ -1,0 +1,9 @@
+This directory contains samples for Trutle.
+
+The library must be installed properly for the 
+samples to comile. If you have not yet installed
+Trutle, perform the following commands in the
+parent directory:
+
+	$:	make
+	$:	sudo make install
