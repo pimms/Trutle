@@ -16,6 +16,10 @@ App::~App() {
 
 void App::SetController(Controller *controller) {
 	mController = controller;
+
+	if (!mController) {
+		mController.Commit();
+	}
 }
 
 Controller* App::GetController() {
@@ -113,4 +117,5 @@ void App::FinalSetup() {
 	}
 
 	mController->LoadContent();
+	mController->SceneTransition();
 }

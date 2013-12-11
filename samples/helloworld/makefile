@@ -1,5 +1,5 @@
 CXX=g++
-INC=
+INC= -L../../build
 LIBS=-ltrutle -lSDL2 -lSDL2_image -lGL -lGLU -lGLEW
 FLG=-std=gnu++0x -g
 OUT=sample

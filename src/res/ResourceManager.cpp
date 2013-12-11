@@ -52,6 +52,8 @@ Resource* ResourceManager::GetResource(	std::string file,
 				resource = NULL;
 				break;
 		}
+		
+		sResources[file] = resource;
 	}
 
 	return resource;

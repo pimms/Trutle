@@ -29,12 +29,6 @@ void Controller::LoadContent() {
 
 void Controller::SetScene(Scene *scene) {
 	mScene = scene;
-
-	// This only makes sense because mScene is 
-	// a CommitPtr.
-	if (!mScene) {
-		mScene.Commit();
-	}
 }
 
 Scene* Controller::GetScene() {
@@ -42,7 +36,9 @@ Scene* Controller::GetScene() {
 }
 
 void Controller::SceneTransition() {
-	mScene.Commit();
+	if (mScene.Commit()) {
+		mScene->LoadContent();
+	}
 }
 
 void Controller::Update(DeltaTime &delta) {
@@ -73,6 +69,8 @@ void Controller::DispatchUpdate(DeltaTime &delta) {
 
 	LayerList *layers = &mScene->GetLayers();
 	LayerIter liter = layers->begin();
+
+	mScene->Update(delta);
 	
 	while (liter != layers->end()) {
 		(*liter)->UpdateSelfAndChildren(delta);
