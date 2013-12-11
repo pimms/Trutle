@@ -4,6 +4,7 @@
 #include "../Trutle.h"
 #include "CommitPtr.h"
 
+class App;
 class Scene;
 class Renderer;
 
@@ -19,6 +20,9 @@ public:
 	Scene* 				GetScene();
 	virtual void 		SceneTransition();
 
+	void 				SetApp(App *app);
+	App* 				GetApp();
+
 	virtual void 		Update(DeltaTime &delta);
 
 protected:
@@ -31,7 +35,7 @@ protected:
 	CommitPtr<Scene> 	mScene;
 
 private:
-
+	App 				*mApp;
 };
 
 

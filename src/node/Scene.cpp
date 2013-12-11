@@ -1,5 +1,7 @@
 #include "Scene.h"
 #include "Layer.h"
+#include "../core/Controller.h"
+#include "../core/App.h"
 
 
 Scene::~Scene() {
@@ -11,6 +13,7 @@ Scene::~Scene() {
 }
 
 void Scene::AddLayer(Layer *layer) {
+	layer->SetScene(this);
 	mLayers.push_back(layer);
 }
 
@@ -26,3 +29,14 @@ void Scene::Update(const DeltaTime &delta) {
 	// ..
 }
 
+void Scene::SetController(Controller *controller) {
+	mController = controller;
+}
+
+Controller* Scene::GetController() {
+	return mController;
+}
+
+App* Scene::GetApp() {
+	return GetController()->GetApp();
+}

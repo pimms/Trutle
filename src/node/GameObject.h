@@ -4,9 +4,13 @@
 #include "../Trutle.h"
 #include "../core/Geometry.h"
 
+class App;
+class Scene;
+class Layer;
+class Texture;
 class Renderer;
 class GameObject;
-class Texture;
+class Controller;
 
 typedef std::list<GameObject*> 	ChildList;
 typedef ChildList::iterator 	ChildIter;
@@ -31,6 +35,13 @@ public:
 	void 				RemoveChild(GameObject *object);
 	ChildList* 			GetChildren();
 
+	void 				SetParent(GameObject *parent);
+	GameObject* 		GetParent();
+	virtual Layer*		GetParentLayer();
+	virtual Scene* 		GetScene();
+	Controller* 		GetController();
+	App* 				GetApp();
+
 protected:
 	ChildList  			mChildren;
 
@@ -42,6 +53,8 @@ protected:
 
 private:
 	void 				ReleaseTexture();
+
+	GameObject 			*mParent;
 };
 
 

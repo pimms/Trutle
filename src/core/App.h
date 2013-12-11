@@ -3,7 +3,7 @@
 
 #include "../Trutle.h"
 #include "Window.h"
-#include "EventDispatcher.h"
+#include "event/EventHandler.h"
 #include "Stack.h"
 #include "CommitPtr.h"
 
@@ -20,6 +20,7 @@ public:
 	void 					SetController(Controller *controller);
 	Controller* 			GetController();
 	Window* 				GetWindow();
+	const InputState* 		GetInputState();
 
 	bool 					Initialize(int argc, char *argv[]);
 	int 					MainLoop();
@@ -27,13 +28,14 @@ public:
 protected:
 	virtual std::string 	GetWindowTitle();
 	virtual bool 			InitApplication(int argc, char **argv);
+	virtual Controller* 	CreateDefaultController();
 
 private:
 	bool 					InitSDL();
 	void 					FinalSetup();
 
 	Window 					mWindow;
-	EventDispatcher 		mEventDispatcher;
+	EventHandler 			mEventHandler;
 	CommitPtr<Controller> 	mController;
 
 	bool 					mInitialized;

@@ -3,14 +3,20 @@
 
 #include "GameObject.h"
 
+class Scene;
+
 
 class Layer : public GameObject {
 public:
+	void 				SetScene(Scene *scene);
 	
+	virtual Layer* 		GetParentLayer();
+	virtual Scene* 		GetScene();
+
 protected:
 
 private:
-	
+	Scene 				*mScene;
 };
 
 

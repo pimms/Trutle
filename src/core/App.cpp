@@ -15,6 +15,10 @@ App::~App() {
 }
 
 void App::SetController(Controller *controller) {
+	if (controller) {
+		controller->SetApp(this);
+	}
+
 	mController = controller;
 
 	if (!mController) {
@@ -24,8 +28,7 @@ void App::SetController(Controller *controller) {
 
 Controller* App::GetController() {
 	if (!mController) {
-		mController = new Controller();
-		mController.Commit();
+		SetController(CreateDefaultController());
 	}
 
 	return mController;
@@ -33,6 +36,10 @@ Controller* App::GetController() {
 
 Window* App::GetWindow() {
 	return &mWindow;
+}
+
+const InputState* App::GetInputState() {
+	return mEventHandler.GetInputState();
 }
 
 bool App::Initialize(int argc, char *argv[]) {
@@ -66,8 +73,8 @@ int App::MainLoop() {
 
 	DeltaTime deltaTime = { 0.0016f };
 
-	while (!mEventDispatcher.ShouldQuit()) {
-		mEventDispatcher.DispatchEvents();
+	while (!mEventHandler.ShouldQuit()) {
+		mEventHandler.HandleEvents();
 		mController->Update(deltaTime);
 		mWindow.FlipBuffer();
 
@@ -90,6 +97,10 @@ string App::GetWindowTitle() {
 
 bool App::InitApplication(int argc, char *argv[]) {
 	return true;
+}
+
+Controller* App::CreateDefaultController() {
+	return new Controller();
 }
 
 

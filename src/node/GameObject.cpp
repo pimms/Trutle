@@ -1,5 +1,9 @@
 #include "GameObject.h"
+#include "Layer.h"
+#include "Scene.h"
 #include "../core/Renderer.h"
+#include "../core/Controller.h"
+#include "../core/App.h"
 #include "../res/ResourceManager.h"
 #include "../res/Texture.h"
 
@@ -8,6 +12,7 @@ GameObject::GameObject() {
 	mRotation = 0.f;
 	mScale = {1.f, 1.f};
 	mTexture = NULL;
+	mParent = NULL;
 }
 
 GameObject::~GameObject() {
@@ -83,6 +88,48 @@ void GameObject::RemoveChild(GameObject *object) {
 
 ChildList* GameObject::GetChildren() {
 	return &mChildren;
+}
+
+void GameObject::SetParent(GameObject *parent) {
+	mParent = parent;
+}
+
+GameObject* GameObject::GetParent() {
+	return mParent;
+}
+
+Layer* GameObject::GetParentLayer() {
+	if (mParent) {
+		return mParent->GetParentLayer();
+	}
+
+	return NULL;
+}
+
+Scene* GameObject::GetScene() {
+	if (GetParent()) {
+		return GetParent()->GetScene();
+	}
+
+	return NULL;
+}
+
+Controller* GameObject::GetController() {
+	Scene *scene = GetScene();
+	if (scene) {
+		return scene->GetController();
+	}
+
+	return NULL;
+}
+
+App* GameObject::GetApp() {
+	Controller *ctrl = GetController();
+	if (ctrl) {
+		return ctrl->GetApp();
+	}
+
+	return NULL;
 }
 
 

@@ -8,6 +8,7 @@
 Controller::Controller() {
 	mScene = NULL;
 	mRenderer = NULL;
+	mApp = NULL;
 }
 
 Controller::~Controller() {
@@ -28,6 +29,8 @@ void Controller::LoadContent() {
 }
 
 void Controller::SetScene(Scene *scene) {
+	scene->SetController(this);
+	
 	mScene = scene;
 }
 
@@ -39,6 +42,14 @@ void Controller::SceneTransition() {
 	if (mScene.Commit()) {
 		mScene->LoadContent();
 	}
+}
+
+void Controller::SetApp(App *app) {
+	mApp = app;
+}
+
+App* Controller::GetApp() {
+	return mApp;
 }
 
 void Controller::Update(DeltaTime &delta) {
