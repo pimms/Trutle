@@ -121,11 +121,6 @@ void Renderer::RenderTexture(Texture *tex, Rect clip) {
 		fClip.x, 			fClip.y,
 	};
 
-
-	printf("\n---------------->\n");
-	for (int i=0; i<8; i++) printf("%0.2f  ", vertices[i]);	printf("\n");
-	for (int i=0; i<8; i++) printf("%0.2f  ", texcoord[i]);	printf("\n");
-
 	glEnable(GL_TEXTURE_2D);
 	tex->Bind();
 
