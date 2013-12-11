@@ -68,5 +68,8 @@ Texture* ResourceManager::CreateTexture(std::string file) {
 		return NULL;
 	}
 
+	printf("Texture '%s' loaded with ID %i\n",
+		file.c_str(), tex->GetTextureID());
+
 	return tex;
 }

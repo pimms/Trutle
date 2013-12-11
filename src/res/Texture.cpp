@@ -1,4 +1,5 @@
 #include "Texture.h"
+#include "../core/Renderer.h"
 
 
 Texture::Texture(std::string res) : Resource(res) {
@@ -36,6 +37,11 @@ bool Texture::Load() {
 
 	// Generate the texture
 	glGenTextures(1, &mTexId);
+	if (mTexId == 0) {
+		Renderer::PrintOpenGLErrors("texture load failed");
+		return false;
+	}
+
 	glBindTexture(GL_TEXTURE_2D, mTexId);
 
 	// Pass it our data
@@ -49,7 +55,6 @@ bool Texture::Load() {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 	glDisable(GL_TEXTURE_2D);
-
 	SDL_FreeSurface(surface);
 	return true;
 }

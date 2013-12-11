@@ -6,6 +6,7 @@
 
 GameObject::GameObject() {
 	mRotation = 0.f;
+	mScale = {1.f, 1.f};
 	mTexture = NULL;
 }
 
@@ -44,14 +45,12 @@ void GameObject::Render(Renderer *renderer) {
 	renderer->PushTransform();
 	renderer->ApplyTransform(this);
 
-	glPointSize(10.f);
-	glColor3ub(255, 255, 255);
-	glBegin(GL_QUADS);
-	glVertex2f(0.f, 0.f);
-	glVertex2f(10.f, 0.f);
-	glVertex2f(10.f, 10.f);
-	glVertex2f(0.f, 10.f);
-	glEnd();
+	if (mTexture) {
+		renderer->RenderTexture(
+			mTexture, 
+			Rect(Vec2(0,0), mTexture->GetDimensions())
+		);
+	}
 
 	ChildIter iter = mChildren.begin();
 	while (iter != mChildren.end()) {
@@ -68,6 +67,10 @@ Vec2& GameObject::Position() {
 
 float& GameObject::Rotation() {
 	return mRotation;
+}
+
+Vec2& GameObject::Scale() {
+	return mScale;
 }
 
 void GameObject::AddChild(GameObject *object) {

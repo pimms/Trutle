@@ -17,7 +17,7 @@ OBJ = $(subst .cpp,.o,$(SRC))
 
 all: $(OBJ)
 	@echo "LINK $(OUT)"
-	ar rvs $(LIBTARGET) $(OBJ)
+	@ar rvs $(LIBTARGET) $(OBJ) >/dev/null
 	@mkdir -p $(BUILDDIR)include
 	@cd src && find -name '*.h' -print | cpio -pdlv ../$(BUILDDIR)include 2>/dev/null
 
@@ -25,7 +25,7 @@ all: $(OBJ)
 	@echo "COMPILE $<"
 	@$(CXX) $(FLG) -o $@ -c $< $(INC) $(LIBS)
 
-install: all
+install: $(LIBTARGET)
 	@echo "COPYING LIB"
 	@mkdir -p $(LIBINSTALLDIR)
 	@cp -f $(LIBTARGET) $(LIBINSTALLDIR)

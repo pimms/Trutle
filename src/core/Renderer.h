@@ -12,6 +12,8 @@ class GameObject;
 
 class Renderer {
 public:
+	static bool 		PrintOpenGLErrors(std::string ctx);
+
 	virtual 			~Renderer();
 	virtual bool 		Init(Vec2 coordBounds);
 	virtual void 		RenderFrame(Scene *scene);

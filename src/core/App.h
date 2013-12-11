@@ -21,21 +21,22 @@ public:
 	Controller* 			GetController();
 	Window* 				GetWindow();
 
-	int 					Run(int argc, char *argv[]);
+	bool 					Initialize(int argc, char *argv[]);
+	int 					MainLoop();
 
 protected:
 	virtual std::string 	GetWindowTitle();
 	virtual bool 			InitApplication(int argc, char **argv);
 
 private:
-	bool 					Init();
 	bool 					InitSDL();
-
-	bool 					MainLoop();
+	void 					FinalSetup();
 
 	Window 					mWindow;
 	EventDispatcher 		mEventDispatcher;
 	CommitPtr<Controller> 	mController;
+
+	bool 					mInitialized;
 };
 
 #undef TRUTLE_HEADER

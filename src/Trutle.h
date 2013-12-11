@@ -48,7 +48,7 @@ struct DeltaTime {
 #	include "core/Controller.h"
 #	include "core/Renderer.h"
 #	include "core/Stack.h"
-#	include "core/Vec2.h"
+#	include "core/Geometry.h"
 #	include "core/Window.h"
 #	include "node/GameObject.h"
 #	include "node/Layer.h"

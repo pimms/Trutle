@@ -1,6 +1,6 @@
 #include "Controller.h"
 #include "Renderer.h"
-#include "Vec2.h"
+#include "Geometry.h"
 #include "../node/Scene.h"
 #include "../node/Layer.h"
 
@@ -23,8 +23,7 @@ void Controller::LoadContent() {
 	}
 
 	if (!mScene) {
-		mScene = CreateDefaultScene();
-		mScene.Commit();
+		printf("[WARNING]: Controller has no Scene\n");
 	}
 }
 
@@ -64,12 +63,14 @@ Scene* Controller::CreateDefaultScene() {
 void Controller::DrawScene() {
 	if (mScene) {
 		mRenderer->RenderFrame(mScene);
-	} else {
-		printf("Controller has no Scene\n");
 	}
 }
 
 void Controller::DispatchUpdate(DeltaTime &delta) {
+	if (!mScene) {
+		return;
+	}
+
 	LayerList *layers = &mScene->GetLayers();
 	LayerIter liter = layers->begin();
 	

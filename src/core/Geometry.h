@@ -33,6 +33,13 @@ public:
 		w = pw;
 		h = ph;
 	}
+
+	t_Rect(Vec2 pos, Vec2 dim) {
+		x = pos.x;
+		y = pos.y;
+		w = dim.x;
+		h = dim.y;
+	}
 };
 
 typedef t_Rect<int>   RectI;

@@ -7,6 +7,7 @@
 /***** Public Methods *****/
 App::App() {
 	mController = NULL;
+	mInitialized = false;
 }
 
 App::~App() {
@@ -30,34 +31,51 @@ Window* App::GetWindow() {
 	return &mWindow;
 }
 
-int App::Run(int argc, char *argv[]) {
-	if (!Init()) {
-		printf("Stock initalization failed\n");
-		return -2;
+bool App::Initialize(int argc, char *argv[]) {
+	if (!InitSDL()) {
+		printf("SDL Initialization failed\n");
+		return false;
 	}
+	
+	if (!mWindow.CreateWindow(Vec2(640, 480))) {
+		printf("Failed to create window\n");
+		return false;
+	}
+	mWindow.SetTitle(GetWindowTitle());
 
 	if (!InitApplication(argc, argv)) {
 		printf("Custom initialization failed\n");
-		return -3;
+		return false;
 	}
 
-	if (!mController) {
-		mController = new Controller();
-		mController.Commit();
+	mInitialized = true;
+	return true;
+}
+
+int App::MainLoop() {
+	if (!mInitialized) {
+		printf("[ERROR]: App not initialized\n");
+		return 1;
 	}
 
-	mController->LoadContent();
+	FinalSetup();
 
-	int status = 0;
+	DeltaTime deltaTime = { 0.0016f };
 
-	if (!MainLoop()) {
-		printf("Game loop terminated\n");
-		status = -4;
+	while (!mEventDispatcher.ShouldQuit()) {
+		mEventDispatcher.DispatchEvents();
+		mController->Update(deltaTime);
+		mWindow.FlipBuffer();
+
+		if (mController.Commit()) {
+			mController->LoadContent();
+		}
+
+		mController->SceneTransition();
+		Renderer::PrintOpenGLErrors("Post-frame");
 	}
 
-	ResourceManager::Purge();
-
-	return status;
+	return 0;
 }
 
 
@@ -72,22 +90,6 @@ bool App::InitApplication(int argc, char *argv[]) {
 
 
 /***** Private Methods *****/
-bool App::Init() {
-	if (!InitSDL()) {
-		printf("SDL Initialization failed\n");
-		return false;
-	}
-	
-	if (!mWindow.CreateWindow(Vec2(640, 480))) {
-		printf("Failed to create window\n");
-		return false;
-	}
-
-	mWindow.SetTitle(GetWindowTitle());
-
-	return true;
-}
-
 bool App::InitSDL() {
 	if (!SDL_Init(SDL_INIT_EVERYTHING) != 0) {
 		printf("SDL_Init() error: \n%s\n", SDL_GetError());
@@ -104,18 +106,11 @@ bool App::InitSDL() {
 	return true;
 }
 
-bool App::MainLoop() {
-	DeltaTime deltaTime = { 0.0016f };
-
-	while (!mEventDispatcher.ShouldQuit()) {
-		mEventDispatcher.DispatchEvents();
-		mController->Update(deltaTime);
-		mWindow.FlipBuffer();
-
-		if (mController.Commit()) {
-			mController->LoadContent();
-		}
+void App::FinalSetup() {
+	if (!mController) {
+		mController = new Controller();
+		mController.Commit();
 	}
 
-	return true;
+	mController->LoadContent();
 }

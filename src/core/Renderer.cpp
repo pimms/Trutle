@@ -5,6 +5,44 @@
 #include "../res/Texture.h"
 
 
+/***** Static Public Methods *****/
+bool Renderer::PrintOpenGLErrors(std::string context) {
+	GLenum error = glGetError();
+    if (error != GL_NO_ERROR) {
+        printf("OpenGL error (context='%s'): ", context.c_str());
+
+        switch (error) {
+            case GL_INVALID_ENUM:
+                    printf("GL_INVALID_ENUM");
+                    break;
+            case GL_INVALID_VALUE:
+                    printf("GL_INVALID_VALUE");
+					break;
+            case GL_INVALID_OPERATION:
+                    printf("GL_INVALID_OPERATION");
+                    break;
+            case GL_OUT_OF_MEMORY:
+                    printf("GL_OUT_OF_MEMORY");
+                    break;
+            case GL_STACK_UNDERFLOW:
+                    printf("GL_STACK_UNDERFLOW");
+                    break;
+            case GL_STACK_OVERFLOW:
+                    printf("GL_STACK_OVERFLOW");
+                    break;
+            default:
+                    printf("UNDEFINED GL ERROR");
+        }
+
+        printf(" (%x)\n", error);
+		return false;
+    }
+
+	return true;
+}
+
+
+/***** Public Methods *****/
 Renderer::~Renderer() {
 
 }
@@ -25,6 +63,12 @@ bool Renderer::Init(Vec2 coordBounds) {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
+	GLenum error = glewInit();
+	if (error != GL_NO_ERROR) {
+		return false;
+	}
+
+	printf("[Renderer Intialized]\n");
 	return true;
 }
 
@@ -60,4 +104,41 @@ void Renderer::RenderTexture(Texture *tex, Rect clip) {
 
 	fClip.x = clip.x / tex->GetDimensions().x;
 	fClip.y = clip.y / tex->GetDimensions().y;
+	fClip.w = clip.w / tex->GetDimensions().x;
+	fClip.h = clip.h / tex->GetDimensions().y;
+
+	float vertices[8] = {
+		clip.x, 			clip.y,
+		clip.x + clip.w,	clip.y,
+		clip.x + clip.w, 	clip.y + clip.h,
+		clip.x, 			clip.y + clip.h,
+	};
+
+	float texcoord[8] = {
+		fClip.x, 			fClip.y + fClip.h,
+		fClip.x + fClip.w,	fClip.y + fClip.h,
+		fClip.x + fClip.w, 	fClip.y,
+		fClip.x, 			fClip.y,
+	};
+
+
+	printf("\n---------------->\n");
+	for (int i=0; i<8; i++) printf("%0.2f  ", vertices[i]);	printf("\n");
+	for (int i=0; i<8; i++) printf("%0.2f  ", texcoord[i]);	printf("\n");
+
+	glEnable(GL_TEXTURE_2D);
+	tex->Bind();
+
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnableClientState(GL_VERTEX_ARRAY);
+
+	glVertexPointer(2, GL_FLOAT, 0, vertices);
+	glTexCoordPointer(2, GL_FLOAT, 0, texcoord);
+	glDrawArrays(GL_QUADS, 0, 4);
+
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
+
+	glDisable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
