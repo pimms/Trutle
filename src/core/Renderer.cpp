@@ -1,4 +1,5 @@
 #include "Renderer.h"
+#include "Log.h"
 #include "../node/GameObject.h"
 #include "../node/Scene.h"
 #include "../node/Layer.h"
@@ -9,32 +10,35 @@
 bool Renderer::PrintOpenGLErrors(std::string context) {
 	GLenum error = glGetError();
     if (error != GL_NO_ERROR) {
-        printf("OpenGL error (context='%s'): ", context.c_str());
+
+    	std::string errStr = "OpenGL error (context='";
+    	errStr += context + "'): ";
 
         switch (error) {
             case GL_INVALID_ENUM:
-                    printf("GL_INVALID_ENUM");
+                    errStr += ("GL_INVALID_ENUM");
                     break;
             case GL_INVALID_VALUE:
-                    printf("GL_INVALID_VALUE");
+                    errStr += ("GL_INVALID_VALUE");
 					break;
             case GL_INVALID_OPERATION:
-                    printf("GL_INVALID_OPERATION");
+                    errStr += "GL_INVALID_OPERATION";
                     break;
             case GL_OUT_OF_MEMORY:
-                    printf("GL_OUT_OF_MEMORY");
+                    errStr += "GL_OUT_OF_MEMORY";
                     break;
             case GL_STACK_UNDERFLOW:
-                    printf("GL_STACK_UNDERFLOW");
+                    errStr += "GL_STACK_UNDERFLOW";
                     break;
             case GL_STACK_OVERFLOW:
-                    printf("GL_STACK_OVERFLOW");
+                    errStr += "GL_STACK_OVERFLOW";
                     break;
             default:
-                    printf("UNDEFINED GL ERROR");
+                    errStr += "UNDEFINED GL ERROR";
         }
 
-        printf(" (%x)\n", error);
+        Log::Error(errStr);
+
 		return false;
     }
 
@@ -68,7 +72,7 @@ bool Renderer::Init(Vec2 coordBounds) {
 		return false;
 	}
 
-	printf("[Renderer Intialized]\n");
+	Log::Info("Renderer initialized");
 	return true;
 }
 

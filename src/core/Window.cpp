@@ -1,5 +1,6 @@
 #include "Window.h"
 #include "Geometry.h"
+#include "Log.h"
 
 
 Window::Window() {
@@ -28,15 +29,15 @@ bool Window::CreateWindow(Vec2 resolution) {
 		resolution.y,
 		SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
 	if (!mWindow) {
-		printf("Failed to create window:\n%s\n", 
-			SDL_GetError());
+		Log::Error((std::string)"Failed to create window: " +
+								SDL_GetError());
 		return false;
 	}
 
 	mGLContext = SDL_GL_CreateContext(mWindow);
 	if (!mGLContext) {
-		printf("Failed to create OpenGL Context:\n%s\n", 
-			SDL_GetError());
+		Log::Error((std::string)"Failed to create GL context: " +
+								SDL_GetError());
 		return false;
 	}
 	

@@ -1,6 +1,7 @@
 #include "Controller.h"
 #include "Renderer.h"
 #include "Geometry.h"
+#include "Log.h"
 #include "../node/Scene.h"
 #include "../node/Layer.h"
 
@@ -9,6 +10,8 @@ Controller::Controller() {
 	mScene = NULL;
 	mRenderer = NULL;
 	mApp = NULL;
+
+	mScene.Commit();
 }
 
 Controller::~Controller() {
@@ -20,17 +23,16 @@ Controller::~Controller() {
 void Controller::LoadContent() {
 	mRenderer = CreateRenderer();
 	if (!mRenderer->Init(Vec2(640, 480))) {
-		printf("Failed to initialize Renderer\n");
+		Log::Error("Failed to initialize Renderer");
 	}
 
 	if (!mScene) {
-		printf("[WARNING]: Controller has no Scene\n");
+		Log::Verbose("Controller has no Scene");
 	}
 }
 
 void Controller::SetScene(Scene *scene) {
 	scene->SetController(this);
-	
 	mScene = scene;
 }
 

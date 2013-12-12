@@ -8,6 +8,8 @@ class Scene;
 
 class Layer : public GameObject {
 public:
+						Layer();
+						
 	void 				SetScene(Scene *scene);
 	
 	virtual Layer* 		GetParentLayer();

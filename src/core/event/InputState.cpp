@@ -1,4 +1,5 @@
 #include "InputState.h"
+#include "../Log.h"
 
 
 InputState::InputState() {
@@ -23,39 +24,57 @@ void InputState::InvalidateFreshBits() {
 }
 
 bool InputState::IsKeyDown(SDL_Keycode key) const {
-	int index = key / 32;
-	int bit = key % 32;
+	if (key < 512) {
+		int index = key / 32;
+		int bit = key % 32;
 
-	return mKeyBits[index] & (1<<bit);
+		return mKeyBits[index] & (1<<bit);
+	}
+
+	Log::Verbose("InputState::IsKeyDown(): Invalid param");
+	return false;
 }
 
 bool InputState::IsKeyFresh(SDL_Keycode key) const {
-	int index = key / 32;
-	int bit = key % 32;
+	if (key < 512) {
+		int index = key / 32;
+		int bit = key % 32;
 
-	return mFreshKeyBits[index] & (1<<bit);	
+		return mFreshKeyBits[index] & (1<<bit);	
+	}
+
+	Log::Verbose("InputState::IsKeyFresh(): Invalid param");
+	return false;
 }
 
 
 /***** Private Methods *****/
 void InputState::OnKeyUp(SDL_KeyboardEvent *keyEvt) {
-	int index = keyEvt->keysym.sym / 32;
-	int bit = keyEvt->keysym.sym % 32;
+	if (keyEvt->keysym.sym < 512) {
+		int index = keyEvt->keysym.sym / 32;
+		int bit = keyEvt->keysym.sym % 32;
 
-	// Unflag the key
-	mKeyBits[index] &= ~(1<<bit);
+		// Unflag the key
+		mKeyBits[index] &= ~(1<<bit);
+	} else {
+		Log::Verbose("InputState::OnKeyUp(): Invalid param");
+	}
 }
 
 void InputState::OnKeyDown(SDL_KeyboardEvent *keyEvt) {
-	int index = keyEvt->keysym.sym / 32;
-	int bit = keyEvt->keysym.sym % 32;
+	if (keyEvt->keysym.sym < 512) {
+		int index = keyEvt->keysym.sym / 32;
+		int bit = keyEvt->keysym.sym % 32;
 
-	// The key is fresh if it was not already being
-	// pressed.
-	if ((mKeyBits[index] & (1<<bit)) == 0) {
-		mFreshKeyBits[index] &= ~(1<<bit);
+		// The key is fresh if it was not already being
+		// pressed.
+		if ((mKeyBits[index] & (1<<bit)) == 0) {
+			mFreshKeyBits[index] &= ~(1<<bit);
+		}
+
+		// Flag the key
+		mKeyBits[index] |= (1<<bit);	
+	} else {
+		Log::Verbose("InputState::OnKeyDown(): Invalid param");
 	}
-
-	// Flag the key
-	mKeyBits[index] |= (1<<bit);
 }

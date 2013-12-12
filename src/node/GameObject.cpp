@@ -80,10 +80,12 @@ Vec2& GameObject::Scale() {
 
 void GameObject::AddChild(GameObject *object) {
 	mChildren.push_back(object);
+	object->SetParent(this);
 }
 
 void GameObject::RemoveChild(GameObject *object) {
 	mChildren.remove(object);
+	object->SetParent(NULL);
 }
 
 ChildList* GameObject::GetChildren() {
@@ -127,6 +129,15 @@ App* GameObject::GetApp() {
 	Controller *ctrl = GetController();
 	if (ctrl) {
 		return ctrl->GetApp();
+	}
+
+	return NULL;
+}
+
+const InputState* GameObject::GetInputState() {
+	App *app = GetApp();
+	if (app) {
+		return app->GetInputState();
 	}
 
 	return NULL;

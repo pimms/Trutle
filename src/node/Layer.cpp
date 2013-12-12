@@ -1,6 +1,10 @@
 #include "Layer.h"
 
 
+Layer::Layer() {
+	mScene = NULL;
+}
+
 void Layer::SetScene(Scene *scene) {
 	mScene = scene;
 }

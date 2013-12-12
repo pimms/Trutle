@@ -1,6 +1,7 @@
 #include "App.h"
 #include "Renderer.h"
 #include "Controller.h"
+#include "Log.h"
 #include "../res/ResourceManager.h"
 
 
@@ -8,6 +9,8 @@
 App::App() {
 	mController = NULL;
 	mInitialized = false;
+
+	mController.Commit();
 }
 
 App::~App() {
@@ -44,7 +47,7 @@ const InputState* App::GetInputState() {
 
 bool App::Initialize(int argc, char *argv[]) {
 	if (!InitSDL()) {
-		printf("SDL Initialization failed\n");
+		Log::Error("SDL Initialization failed");
 		return false;
 	}
 	
@@ -55,7 +58,7 @@ bool App::Initialize(int argc, char *argv[]) {
 	mWindow.SetTitle(GetWindowTitle());
 
 	if (!InitApplication(argc, argv)) {
-		printf("Custom initialization failed\n");
+		Log::Error("Custom initialization failed");
 		return false;
 	}
 
@@ -65,13 +68,13 @@ bool App::Initialize(int argc, char *argv[]) {
 
 int App::MainLoop() {
 	if (!mInitialized) {
-		printf("[ERROR]: App not initialized\n");
+		Log::Error("App not initialized");
 		return 1;
 	}
 
 	FinalSetup();
 
-	DeltaTime deltaTime = { 0.0016f };
+	DeltaTime deltaTime = { 0.016f };
 
 	while (!mEventHandler.ShouldQuit()) {
 		mEventHandler.HandleEvents();
@@ -107,10 +110,9 @@ Controller* App::CreateDefaultController() {
 /***** Private Methods *****/
 bool App::InitSDL() {
 	if (!SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-		printf("SDL_Init() error: \n%s\n", SDL_GetError());
-
-		/* Like I give a fuck */
 		if (strcmp(SDL_GetError(), "Unknown touch device") != 0) {
+			Log::Error((std::string)"SDL_Init() error: "
+									+SDL_GetError());
 			return false;
 		}
 	}

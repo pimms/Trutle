@@ -10,6 +10,8 @@ Scene::~Scene() {
 		delete *iter;
 		iter++;
 	}
+
+	mController = NULL;
 }
 
 void Scene::AddLayer(Layer *layer) {

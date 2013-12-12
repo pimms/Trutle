@@ -11,6 +11,7 @@ class Texture;
 class Renderer;
 class GameObject;
 class Controller;
+class InputState;
 
 typedef std::list<GameObject*> 	ChildList;
 typedef ChildList::iterator 	ChildIter;
@@ -41,6 +42,7 @@ public:
 	virtual Scene* 		GetScene();
 	Controller* 		GetController();
 	App* 				GetApp();
+	const InputState*	GetInputState();
 
 protected:
 	ChildList  			mChildren;
