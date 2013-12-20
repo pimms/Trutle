@@ -31,6 +31,7 @@ public:
 	virtual Vec2& 		Position();
 	virtual float& 		Rotation();
 	virtual Vec2& 		Scale();
+	virtual Vec2& 		Pivot();
 
 	void 				AddChild(GameObject *object);
 	void 				RemoveChild(GameObject *object);
@@ -44,12 +45,15 @@ public:
 	App* 				GetApp();
 	const InputState*	GetInputState();
 
+	Texture* 			GetTexture();
+
 protected:
 	ChildList  			mChildren;
 
 	Vec2 				mPosition;
 	Vec2 				mScale;
 	float 				mRotation;
+	Vec2 				mPivot;
 
 	Texture 			*mTexture;
 

@@ -11,6 +11,8 @@
 GameObject::GameObject() {
 	mRotation = 0.f;
 	mScale = {1.f, 1.f};
+	mPivot = {1.f, 1.f};
+
 	mTexture = NULL;
 	mParent = NULL;
 }
@@ -78,6 +80,10 @@ Vec2& GameObject::Scale() {
 	return mScale;
 }
 
+Vec2& GameObject::Pivot() {
+	return mPivot;
+}
+
 void GameObject::AddChild(GameObject *object) {
 	mChildren.push_back(object);
 	object->SetParent(this);
@@ -141,6 +147,10 @@ const InputState* GameObject::GetInputState() {
 	}
 
 	return NULL;
+}
+
+Texture* GameObject::GetTexture() {
+	return mTexture;
 }
 
 
