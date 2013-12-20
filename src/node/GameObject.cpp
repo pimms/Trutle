@@ -15,6 +15,7 @@ GameObject::GameObject() {
 
 	mTexture = NULL;
 	mParent = NULL;
+	mVisible = true;
 }
 
 GameObject::~GameObject() {
@@ -52,7 +53,7 @@ void GameObject::Render(Renderer *renderer) {
 	renderer->PushTransform();
 	renderer->ApplyTransform(this);
 
-	if (mTexture) {
+	if (mTexture && mVisible) {
 		renderer->RenderTexture(
 			mTexture, 
 			Rect(Vec2(0,0), mTexture->GetDimensions()),
@@ -152,6 +153,14 @@ const InputState* GameObject::GetInputState() {
 
 Texture* GameObject::GetTexture() {
 	return mTexture;
+}
+
+void GameObject::SetVisible(bool visible) {
+	mVisible = visible;
+}
+
+bool GameObject::GetVisible() {
+	return mVisible;
 }
 
 

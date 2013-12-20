@@ -47,6 +47,9 @@ public:
 
 	Texture* 			GetTexture();
 
+	void 				SetVisible(bool visible);
+	bool 				GetVisible();
+
 protected:
 	ChildList  			mChildren;
 
@@ -56,6 +59,8 @@ protected:
 	Vec2 				mPivot;
 
 	Texture 			*mTexture;
+
+	bool 				mVisible;
 
 private:
 	void 				ReleaseTexture();
