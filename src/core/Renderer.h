@@ -22,7 +22,7 @@ public:
 	virtual void 		ApplyTransform(GameObject *object);
 	virtual void 		PopTransform();
 
-	virtual void 		RenderTexture(Texture *tex, Rect pixelClip);
+	virtual void 		RenderTexture(Texture *tex, Rect pixelClip, Vec2 pivot);
 
 protected:
 

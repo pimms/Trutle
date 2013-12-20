@@ -55,7 +55,8 @@ void GameObject::Render(Renderer *renderer) {
 	if (mTexture) {
 		renderer->RenderTexture(
 			mTexture, 
-			Rect(Vec2(0,0), mTexture->GetDimensions())
+			Rect(Vec2(0,0), mTexture->GetDimensions()),
+			Pivot()
 		);
 	}
 

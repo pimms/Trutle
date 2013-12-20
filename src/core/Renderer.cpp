@@ -103,13 +103,20 @@ void Renderer::PopTransform() {
 	glPopMatrix();
 }
 
-void Renderer::RenderTexture(Texture *tex, Rect clip) {
+void Renderer::RenderTexture(Texture *tex, Rect clip, Vec2 pivot) {
 	Rect fClip;
 
 	fClip.x = clip.x / tex->GetDimensions().x;
 	fClip.y = clip.y / tex->GetDimensions().y;
 	fClip.w = clip.w / tex->GetDimensions().x;
 	fClip.h = clip.h / tex->GetDimensions().y;
+
+	// Adjust the clip rectangle based on the pivot point.
+	// pivot={0.5,0.5} centers the texture on the clip position.
+	Vec2 dim = tex->GetDimensions();
+	clip.x -= dim.x * pivot.x;
+	clip.y -= dim.y * pivot.y;
+
 
 	float vertices[8] = {
 		clip.x, 			clip.y,
