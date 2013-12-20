@@ -17,11 +17,15 @@ int main(int argc, char *argv[]) {
 	GameObject *ob = new GameObject();
 	ob->Position() = Vec2(100.f, 100.f);
 	ob->LoadTexture("helloworld.png");
+	ob->Pivot() = Vec2(0.f, 0.f);
 	layer->AddChild(ob);
-
+	
+	// The second image is not moved by position, but by 
+	// Pivot-modification. 
 	GameObject *ob2 = new GameObject();
-	ob2->Position() = Vec2(25.f, -30.f);
+	ob2->Position() = Vec2(0.f, 0.f);
 	ob2->LoadTexture("helloworld.png");
+	ob2->Pivot() = Vec2(-0.1f, 0.1f);
 	ob->AddChild(ob2);
 
 	return app.MainLoop();

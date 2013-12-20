@@ -11,7 +11,7 @@
 GameObject::GameObject() {
 	mRotation = 0.f;
 	mScale = {1.f, 1.f};
-	mPivot = {1.f, 1.f};
+	mPivot = {0.5f, 0.5f};
 
 	mTexture = NULL;
 	mParent = NULL;
