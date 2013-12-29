@@ -40,12 +40,12 @@ public:
 
 	void 				UpdateSelfAndChildren(const DeltaTime &);
 	virtual void		Update(const DeltaTime &delta);
-	virtual void 		Render(Renderer *renderer);
+	virtual void   		Render(Renderer *renderer);
 
-	virtual Vec2& 		Position();
-	virtual float& 		Rotation();
-	virtual Vec2& 		Scale();
-	virtual Vec2& 		Pivot();
+	Vec2& 				Position();
+	float&		 		Rotation();
+	Vec2& 				Scale();
+	Vec2& 				Pivot();
 
 	void 				AddChild(GameObject *object);
 	void 				RemoveChild(GameObject *object);
@@ -53,8 +53,8 @@ public:
 
 	void 				SetParent(GameObject *parent);
 	GameObject* 		GetParent();
-	virtual Layer*		GetParentLayer();
-	virtual Scene* 		GetScene();
+	Layer*				GetParentLayer();
+	Scene* 				GetScene();
 	Controller* 		GetController();
 	App* 				GetApp();
 	const InputState*	GetInputState();
@@ -65,6 +65,7 @@ public:
 	bool 				GetVisible();
 
 protected:
+
 	ChildList  			mChildren;
 
 	Vec2 				mPosition;
@@ -76,9 +77,10 @@ protected:
 
 	bool 				mVisible;
 
+
 private:
 	void 				ReleaseTexture();
-
+	
 	GameObject 			*mParent;
 
 	// Components are identified by their type, and only
@@ -177,8 +179,10 @@ bool AddComponent(GameObject *gameObject) {
 	unordered_map<const type_info*, Component*>* comps;
 	comps = mgr.GetComponentList();
 
-	// 
-	if (comps->count(&typeid(_CompT)) != 0) {
+	const type_info *type = &typeid(_CompT);
+
+	if (comps->count(type) != 0 &&
+		!__ComponentManager::HasBeenAdded(gameObject, type)) {
 		std::string err = 	(std::string)
 							"Component already exists on GameObject!"
 						  	" component: " + typeid(_CompT).name();
@@ -202,7 +206,11 @@ bool RemoveComponent(GameObject *gameObject) {
 	unordered_map<const type_info*, Component*> *comps;
 	comps = mgr.GetComponentList();
 
-	if (comps->count(&typeid(_CompT)) != 0) {
+	const type_info *type = &typeid(_CompT);
+
+	if (comps->count(type) != 0 &&
+		!__ComponentManager::HasBeenRemoved(gameObject, type)) 
+	{
 		mgr.RemoveComponent(&typeid(_CompT));
 		return true;
 	}

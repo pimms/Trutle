@@ -46,7 +46,10 @@ void GameObject::UpdateSelfAndChildren(const DeltaTime &delta) {
 }
 
 void GameObject::Update(const DeltaTime &delta) {
-	// ...
+	auto it = mComponents.begin();
+	for (; it != mComponents.end(); it++) {
+		it->second->Update(delta);
+	}
 }
 
 void GameObject::Render(Renderer *renderer) {

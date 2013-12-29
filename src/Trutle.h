@@ -53,4 +53,5 @@ struct DeltaTime {
 #	include "node/GameObject.h"
 #	include "node/Layer.h"
 #	include "node/Scene.h"
+#	include "node/Component.h"
 #endif
