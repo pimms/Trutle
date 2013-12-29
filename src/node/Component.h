@@ -1,3 +1,5 @@
+#pragma once
+
 #define TRUTLE_HEADER
 
 #include "../Trutle.h"
@@ -8,6 +10,9 @@ class Vec2;
 
 class Component {
 public:
+	 					Component(GameObject*);
+	virtual 			~Component() {}
+
 	virtual void 		OnCreate() {}
 	virtual void 		OnStart() {}
 	virtual void 		OnPause() {}
@@ -22,11 +27,6 @@ public:
 
 private:
 	// GameObject creates and deletes components.
-	friend class GameObject;
-						Component() {};
-						Component(const Component&) {};
-						~Component() {}
-
 	GameObject 			*mGameObject;
 };
 

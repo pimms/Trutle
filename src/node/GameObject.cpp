@@ -171,3 +171,92 @@ void GameObject::ReleaseTexture() {
 		mTexture = NULL;
 	}
 }
+
+
+
+/*
+=====================================
+= __ComponentManager implementation =
+=====================================
+*/
+std::list<__ComponentManager::Command*> __ComponentManager::sCommands;
+
+__ComponentManager::__ComponentManager(GameObject *gameObject) 
+			: mGameObject(gameObject) {
+
+}
+
+void __ComponentManager::AddComponent(	Component *component, 
+										const type_info *type) {
+	component->OnCreate();
+
+	NewComponentCmd *ncomp = new NewComponentCmd();
+	ncomp->component = component;
+	ncomp->gameObject = mGameObject;
+	ncomp->type = type;
+
+	sCommands.push_back(ncomp);
+}
+
+void __ComponentManager::RemoveComponent(const type_info *type) {
+	Component *component = mGameObject->mComponents[type];
+	
+	RemoveComponentCmd *rcomp = new RemoveComponentCmd();
+	rcomp->component = component;
+	rcomp->gameObject = mGameObject;
+	rcomp->type = type;
+
+	sCommands.push_front(rcomp);
+}
+
+unordered_map<const type_info*, Component*>*
+					__ComponentManager::GetComponentList() {
+	return &mGameObject->mComponents;
+}
+
+
+/***** Static Methods *****/
+void __ComponentManager::ExecuteCommands() {
+	while (sCommands.size()) {
+		sCommands.front()->Execute();
+		sCommands.erase(sCommands.begin());
+	}
+}
+
+bool __ComponentManager::HasBeenAdded(	GameObject *gameObject, 
+										const std::type_info *type ) {
+	for (auto it = sCommands.begin(); it != sCommands.end(); it++) {
+		if ((*it)->typeID == _CMP_MGR_NEW_COMPONENT_ID &&
+			(*it)->type == type && 
+			(*it)->gameObject == gameObject) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool __ComponentManager::HasBeenRemoved(GameObject *gameObject, 
+										const std::type_info * type) {
+	for (auto it = sCommands.begin(); it != sCommands.end(); it++) {
+		if ((*it)->typeID == _CMP_MGR_REMOVE_COMPONENT_ID &&
+			(*it)->type == type && 
+			(*it)->gameObject == gameObject) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+
+/***** __ComponentManager commands *****/
+void __ComponentManager::NewComponentCmd::Execute() {
+	gameObject->mComponents[type] = component;
+	component->OnStart();
+}
+
+void __ComponentManager::RemoveComponentCmd::Execute() {
+	component->OnDestroy();
+	gameObject->mComponents.erase(type);
+}
