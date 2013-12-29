@@ -3,6 +3,7 @@
 #include "Controller.h"
 #include "Log.h"
 #include "../res/ResourceManager.h"
+#include "../node/GameObject.h"
 
 
 /***** Public Methods *****/
@@ -77,6 +78,8 @@ int App::MainLoop() {
 	DeltaTime deltaTime = { 0.016f };
 
 	while (!mEventHandler.ShouldQuit()) {
+		__ComponentManager::ExecuteCommands();
+
 		mEventHandler.HandleEvents();
 		mController->Update(deltaTime);
 		mWindow.FlipBuffer();

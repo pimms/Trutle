@@ -10,8 +10,8 @@ class Vec2;
 
 class Component {
 public:
-	 					Component(GameObject*);
 	virtual 			~Component() {}
+	void 				SetGameObject(GameObject*);
 
 	virtual void 		OnCreate() {}
 	virtual void 		OnStart() {}

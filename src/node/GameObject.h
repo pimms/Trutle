@@ -173,7 +173,7 @@ _CompT* GetComponent(GameObject *gameObject) {
 // but is given to a __ComponentManager for initialization
 // and attachment to the game object.
 template<class _CompT> 
-bool AddComponent(GameObject *gameObject) {
+_CompT* AddComponent(GameObject *gameObject) {
 	__ComponentManager mgr(gameObject);
 
 	unordered_map<const type_info*, Component*>* comps;
@@ -187,13 +187,15 @@ bool AddComponent(GameObject *gameObject) {
 							"Component already exists on GameObject!"
 						  	" component: " + typeid(_CompT).name();
 		Log::Debug(err);
-		return false;
+		return NULL;
 	}
 
-	Component *component = new _CompT(gameObject);
+	_CompT *component = new _CompT();
+	component->SetGameObject(gameObject);
+	
 	mgr.AddComponent(component, &typeid(_CompT));
 
-	return true;
+	return component;
 }
 
 // The component is only located from within this function.

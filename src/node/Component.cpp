@@ -4,12 +4,12 @@
 
 
 /***** Public Methods *****/
-Component::Component(GameObject *gameObject) {
-	mGameObject = gameObject;
-}
-
 GameObject* Component::GetGameObject() {
 	return mGameObject;	
+}
+
+void Component::SetGameObject(GameObject *gameObject) {
+	mGameObject = gameObject;
 }
 
 Vec2& Component::Position() {
