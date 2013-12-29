@@ -4,6 +4,8 @@
 #include "../Trutle.h"
 #include "../core/Geometry.h"
 
+#include <unordered_map>
+
 class App;
 class Scene;
 class Layer;
@@ -12,10 +14,13 @@ class Renderer;
 class GameObject;
 class Controller;
 class InputState;
+class Component;
 
 typedef std::list<GameObject*> 	ChildList;
 typedef ChildList::iterator 	ChildIter;
 
+using std::type_info;
+using std::unordered_map;
 
 class GameObject {
 public:	
@@ -50,6 +55,11 @@ public:
 	void 				SetVisible(bool visible);
 	bool 				GetVisible();
 
+
+	// ONLY PUBLIC FOR ACCESS FROM GetComponent(GameObject*)!!!
+	// Do not use!
+	unordered_map<const type_info*, Component*>*__GetComponents();
+
 protected:
 	ChildList  			mChildren;
 
@@ -66,7 +76,26 @@ private:
 	void 				ReleaseTexture();
 
 	GameObject 			*mParent;
+
+	unordered_map<const type_info*, Component*> 
+						mComponents;
 };
+
+
+// Components are retrieved from this function. The 
+// component of type _CompT is returned if it is 
+// attached to the GameObject.
+template<class _CompT> 
+_CompT* GetComponent(GameObject *gameObject) {
+	unordered_map<const type_info*, Component*>* comps;
+	comps = gameObject->__GetComponents();
+
+	if (comps->count(&typeid(_CompT)) != 0) {
+        return static_cast<_CompT*>((*comps)[&typeid(_CompT)]);
+    } 
+
+    return NULL;
+}
 
 
 #undef TRUTLE_HEADER
