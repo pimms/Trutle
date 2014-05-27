@@ -20,6 +20,9 @@ public:
 	virtual void 		Update(const DeltaTime&) {}
 
 	GameObject* 		GetGameObject();
+
+	// These methods return the attributes of the owning GameObject.
+	// Obviously, Components have no geometrical attributes.
 	Vec2& 				Position();
 	Vec2& 				Scale();
 	Vec2& 				Pivot();

@@ -4,6 +4,9 @@
 #include "Log.h"
 #include "../res/ResourceManager.h"
 #include "../node/GameObject.h"
+#include <sstream>
+
+using std::stringstream;
 
 
 /***** Public Methods *****/
@@ -113,11 +116,20 @@ Controller* App::CreateDefaultController() {
 
 /***** Private Methods *****/
 bool App::InitSDL() {
-	if (!SDL_Init(SDL_INIT_EVERYTHING) != 0) {
+	int status = 0;
+
+	status = SDL_Init(SDL_INIT_EVERYTHING);
+	if (status != 0) {
+		stringstream ss;
+		ss << "SDL_Init() returned error code: " << status;
+		Log::Warning(ss.str());
+		
 		if (strcmp(SDL_GetError(), "Unknown touch device") != 0) {
 			Log::Error((std::string)"SDL_Init() error: "
 									+SDL_GetError());
 			return false;
+		} else {
+			Log::Info("This error is trivial and occurs frequently. Ignoring.");
 		}
 	}
 
