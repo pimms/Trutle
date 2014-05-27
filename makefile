@@ -14,18 +14,19 @@ LIBTARGET = $(BUILDDIR)libtrutle.a
 
 SRC = $(shell find src -name '*.cpp' -print)
 OBJ = $(subst .cpp,.o,$(SRC))
+HEADERS = $(shell find -name '*.h' -print | egrep "^./src")
 
 all: $(OBJ)
-	@echo "LINK $(OUT)"
-	@ar rvs $(LIBTARGET) $(OBJ) >/dev/null
-	@mkdir -p $(BUILDDIR)include
-	@cd src && find -name '*.h' -print | cpio -pdlv ../$(BUILDDIR)include 2>/dev/null
+	@echo "LINK $(LIBTARGET)"
+	@mkdir -p $(BUILDDIR)include 
+	@ar rvs $(LIBTARGET) $(OBJ) > /dev/null
+	@bash ./cpyheaders.sh
 
 %.o: %.cpp
 	@echo "COMPILE $<"
 	@$(CXX) $(FLG) -o $@ -c $< $(INC) $(LIBS)
 
-install: $(LIBTARGET)
+install: all
 	@echo "COPYING LIB"
 	@mkdir -p $(LIBINSTALLDIR)
 	@cp -f $(LIBTARGET) $(LIBINSTALLDIR)

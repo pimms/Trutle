@@ -20,8 +20,8 @@ class Controller;
 class InputState;
 class __ComponentManager;
 
-typedef std::list<GameObject*> 	ChildList;
-typedef ChildList::iterator 	ChildIter;
+typedef std::vector<GameObject*> 	ChildList;
+typedef ChildList::iterator 		ChildIter;
 
 using std::type_info;
 using std::unordered_map;

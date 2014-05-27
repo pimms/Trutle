@@ -36,6 +36,7 @@ void Controller::SetScene(Scene *scene) {
 	mScene = scene;
 }
 
+
 Scene* Controller::GetScene() {
 	return mScene;
 }
