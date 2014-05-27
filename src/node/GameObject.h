@@ -53,8 +53,8 @@ public:
 
 	void 				SetParent(GameObject *parent);
 	GameObject* 		GetParent();
-	Layer*				GetParentLayer();
-	Scene* 				GetScene();
+	virtual Layer*		GetParentLayer();
+	virtual Scene* 		GetScene();
 	Controller* 		GetController();
 	App* 				GetApp();
 	const InputState*	GetInputState();

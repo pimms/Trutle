@@ -36,3 +36,7 @@ bool EventHandler::ShouldQuit() {
 const InputState* EventHandler::GetInputState() {
 	return &mInputState;
 }
+
+void EventHandler::ClearFreshFlags() {
+	mInputState.InvalidateFreshBits();
+}

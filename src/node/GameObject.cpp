@@ -198,7 +198,8 @@ void __ComponentManager::AddComponent(	Component *component,
 	ncomp->gameObject = mGameObject;
 	ncomp->type = type;
 
-	sCommands.push_back(ncomp);
+	//sCommands.push_back(ncomp);
+	ncomp->Execute();
 }
 
 void __ComponentManager::RemoveComponent(const type_info *type) {

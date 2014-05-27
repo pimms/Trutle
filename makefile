@@ -1,5 +1,5 @@
 CXX = g++
-INC =
+INC = -I/usr/include/ -I/usr/local/include
 LIBS = -lSDL2 -lSDL2main -lGL -lglut -lGLEW -lSDL2_image
 FLG = -std=gnu++11 -g -D TRUTLE_COMPILE
 

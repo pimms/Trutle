@@ -69,7 +69,7 @@ void InputState::OnKeyDown(SDL_KeyboardEvent *keyEvt) {
 		// The key is fresh if it was not already being
 		// pressed.
 		if ((mKeyBits[index] & (1<<bit)) == 0) {
-			mFreshKeyBits[index] &= ~(1<<bit);
+			mFreshKeyBits[index] |= (1<<bit);
 		}
 
 		// Flag the key

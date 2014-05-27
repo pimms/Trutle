@@ -7,10 +7,8 @@
 #	include "SDL/SDL.h"
 #	include "SDL/SDL_main.h"
 #	include "SDL/SDL_image.h"
-#else 	// Assume Unix
+#else 	// Some UNIX variant probably
 #	include <GL/glew.h>
-#	include <GL/gl.h>
-#	include <GL/glu.h>
 #	include <SDL2/SDL.h>
 #	include <SDL2/SDL_image.h>
 #	include <unistd.h>

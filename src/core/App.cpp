@@ -75,10 +75,11 @@ int App::MainLoop() {
 
 	FinalSetup();
 
-	DeltaTime deltaTime = { 0.016f };
+	DeltaTime deltaTime = { 1.f / 60.f };
 
 	while (!mEventHandler.ShouldQuit()) {
 		__ComponentManager::ExecuteCommands();
+		mEventHandler.ClearFreshFlags();
 
 		mEventHandler.HandleEvents();
 		mController->Update(deltaTime);

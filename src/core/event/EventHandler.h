@@ -12,6 +12,7 @@ public:
 	bool 				ShouldQuit();
 
 	const InputState* 	GetInputState();
+	void 				ClearFreshFlags();
 
 private:
 	bool 				mShouldQuit;
