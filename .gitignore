@@ -18,5 +18,10 @@ build/
 # Sublime project files
 *.sublime-*
 
+# vim swapfiles
+.*.swp
+.*.swo
+
 # Sample binaries
 sample
+
