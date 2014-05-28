@@ -4,9 +4,10 @@
 #include "../../Trutle.h"
 
 
-class InputState {
+class InputState
+{
 public:
-					InputState();
+	InputState();
 
 	void 			HandleKeyEvent(SDL_KeyboardEvent *evt);
 	void 			InvalidateFreshBits();

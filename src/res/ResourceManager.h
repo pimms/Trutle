@@ -7,7 +7,8 @@
 class Texture;
 
 
-class ResourceManager {
+class ResourceManager
+{
 public:
 	/* Remove all Resources */
 	static void 		Purge();
@@ -16,7 +17,7 @@ public:
 	static void 		Clean();
 
 	/* Get a resource of a specific type. DOES NOT
-	 * RETAIN THE RESOURCE.  
+	 * RETAIN THE RESOURCE.
 	 */
 	static Resource*	GetResource(std::string, Resource::Type t);
 

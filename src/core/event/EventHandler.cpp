@@ -1,42 +1,47 @@
 #include "EventHandler.h"
 
 
-EventHandler::EventHandler() {
+EventHandler::EventHandler()
+{
 	mShouldQuit = false;
 }
 
-void EventHandler::HandleEvents() {
+void EventHandler::HandleEvents()
+{
 	SDL_Event evt;
 
 	while (SDL_PollEvent(&evt)) {
 		switch (evt.type) {
-			case SDL_QUIT:
-				mShouldQuit = true;
-				break;
+		case SDL_QUIT:
+			mShouldQuit = true;
+			break;
 
-			case SDL_KEYDOWN:	
-			case SDL_KEYUP:
-				mInputState.HandleKeyEvent(&evt.key);
-				break;
+		case SDL_KEYDOWN:
+		case SDL_KEYUP:
+			mInputState.HandleKeyEvent(&evt.key);
+			break;
 
-			case SDL_MOUSEMOTION:
-				break;
-			case SDL_MOUSEBUTTONDOWN:
-				break;
-			case SDL_MOUSEBUTTONUP:
-				break;
+		case SDL_MOUSEMOTION:
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+			break;
+		case SDL_MOUSEBUTTONUP:
+			break;
 		}
 	}
 }
 
-bool EventHandler::ShouldQuit() {
+bool EventHandler::ShouldQuit()
+{
 	return mShouldQuit;
 }
 
-const InputState* EventHandler::GetInputState() {
+const InputState* EventHandler::GetInputState()
+{
 	return &mInputState;
 }
 
-void EventHandler::ClearFreshFlags() {
+void EventHandler::ClearFreshFlags()
+{
 	mInputState.InvalidateFreshBits();
 }

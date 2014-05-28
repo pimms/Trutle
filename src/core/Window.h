@@ -10,11 +10,12 @@ class Vec2;
  *
  * Opens a window, and manages SDL and GL-related handles.
  */
-class Window {
+class Window
+{
 public:
-					Window();
-					~Window();
-					
+	Window();
+	~Window();
+
 	bool 			CreateWindow(Vec2 resolution);
 	void			FlipBuffer();
 

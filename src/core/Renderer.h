@@ -10,7 +10,8 @@ class Texture;
 class GameObject;
 
 
-class Renderer {
+class Renderer
+{
 public:
 	static bool 		PrintOpenGLErrors(std::string ctx);
 

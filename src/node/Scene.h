@@ -11,7 +11,8 @@ typedef std::list<Layer*> 	LayerList;
 typedef LayerList::iterator LayerIter;
 
 
-class Scene {
+class Scene
+{
 public:
 	virtual 			~Scene();
 	void 				AddLayer(Layer *layer);

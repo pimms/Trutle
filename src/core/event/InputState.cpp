@@ -2,14 +2,16 @@
 #include "../Log.h"
 
 
-InputState::InputState() {
+InputState::InputState()
+{
 	for (int i=0; i<16; i++) {
 		mKeyBits[i] = 0;
 		mFreshKeyBits[i] = 0;
 	}
 }
 
-void InputState::HandleKeyEvent(SDL_KeyboardEvent *evt) {
+void InputState::HandleKeyEvent(SDL_KeyboardEvent *evt)
+{
 	if (evt->type == SDL_KEYDOWN) {
 		OnKeyDown(evt);
 	} else if (evt->type == SDL_KEYUP) {
@@ -17,13 +19,15 @@ void InputState::HandleKeyEvent(SDL_KeyboardEvent *evt) {
 	}
 }
 
-void InputState::InvalidateFreshBits() {
+void InputState::InvalidateFreshBits()
+{
 	for (int i=0; i<16; i++) {
 		mFreshKeyBits[i] = 0;
 	}
 }
 
-bool InputState::IsKeyDown(SDL_Keycode key) const {
+bool InputState::IsKeyDown(SDL_Keycode key) const
+{
 	if (key < 512) {
 		int index = key / 32;
 		int bit = key % 32;
@@ -35,12 +39,13 @@ bool InputState::IsKeyDown(SDL_Keycode key) const {
 	return false;
 }
 
-bool InputState::IsKeyFresh(SDL_Keycode key) const {
+bool InputState::IsKeyFresh(SDL_Keycode key) const
+{
 	if (key < 512) {
 		int index = key / 32;
 		int bit = key % 32;
 
-		return mFreshKeyBits[index] & (1<<bit);	
+		return mFreshKeyBits[index] & (1<<bit);
 	}
 
 	Log::Verbose("InputState::IsKeyFresh(): Invalid param");
@@ -49,7 +54,8 @@ bool InputState::IsKeyFresh(SDL_Keycode key) const {
 
 
 /***** Private Methods *****/
-void InputState::OnKeyUp(SDL_KeyboardEvent *keyEvt) {
+void InputState::OnKeyUp(SDL_KeyboardEvent *keyEvt)
+{
 	if (keyEvt->keysym.sym < 512) {
 		int index = keyEvt->keysym.sym / 32;
 		int bit = keyEvt->keysym.sym % 32;
@@ -61,7 +67,8 @@ void InputState::OnKeyUp(SDL_KeyboardEvent *keyEvt) {
 	}
 }
 
-void InputState::OnKeyDown(SDL_KeyboardEvent *keyEvt) {
+void InputState::OnKeyDown(SDL_KeyboardEvent *keyEvt)
+{
 	if (keyEvt->keysym.sym < 512) {
 		int index = keyEvt->keysym.sym / 32;
 		int bit = keyEvt->keysym.sym % 32;
@@ -73,7 +80,7 @@ void InputState::OnKeyDown(SDL_KeyboardEvent *keyEvt) {
 		}
 
 		// Flag the key
-		mKeyBits[index] |= (1<<bit);	
+		mKeyBits[index] |= (1<<bit);
 	} else {
 		Log::Verbose("InputState::OnKeyDown(): Invalid param");
 	}

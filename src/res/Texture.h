@@ -5,9 +5,10 @@
 #include "../core/Geometry.h"
 
 
-class Texture : public Resource {
+class Texture : public Resource
+{
 public:
-					Texture(std::string res);
+	Texture(std::string res);
 	virtual 		~Texture();
 	bool 			Load();
 

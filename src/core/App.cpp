@@ -10,18 +10,21 @@ using std::stringstream;
 
 
 /***** Public Methods *****/
-App::App() {
+App::App()
+{
 	mController = NULL;
 	mInitialized = false;
 
 	mController.Commit();
 }
 
-App::~App() {
+App::~App()
+{
 
 }
 
-void App::SetController(Controller *controller) {
+void App::SetController(Controller *controller)
+{
 	if (controller) {
 		controller->SetApp(this);
 	}
@@ -33,7 +36,8 @@ void App::SetController(Controller *controller) {
 	}
 }
 
-Controller* App::GetController() {
+Controller* App::GetController()
+{
 	if (!mController) {
 		SetController(CreateDefaultController());
 	}
@@ -41,20 +45,23 @@ Controller* App::GetController() {
 	return mController;
 }
 
-Window* App::GetWindow() {
+Window* App::GetWindow()
+{
 	return &mWindow;
 }
 
-const InputState* App::GetInputState() {
+const InputState* App::GetInputState()
+{
 	return mEventHandler.GetInputState();
 }
 
-bool App::Initialize(int argc, char *argv[]) {
+bool App::Initialize(int argc, char *argv[])
+{
 	if (!InitSDL()) {
 		Log::Error("SDL Initialization failed");
 		return false;
 	}
-	
+
 	if (!mWindow.CreateWindow(Vec2(640, 480))) {
 		printf("Failed to create window\n");
 		return false;
@@ -70,13 +77,14 @@ bool App::Initialize(int argc, char *argv[]) {
 	return true;
 }
 
-int App::MainLoop() {
+int App::MainLoop()
+{
 	if (!mInitialized) {
 		Log::Error("App not initialized");
 		return 1;
 	}
 
-	FinalSetup();
+	InitController();
 
 	DeltaTime deltaTime = { 1.f / 60.f };
 
@@ -101,21 +109,25 @@ int App::MainLoop() {
 
 
 /***** Protected Methods *****/
-string App::GetWindowTitle() {
+string App::GetWindowTitle()
+{
 	return "Trutle Application";
 }
 
-bool App::InitApplication(int argc, char *argv[]) {
+bool App::InitApplication(int argc, char *argv[])
+{
 	return true;
 }
 
-Controller* App::CreateDefaultController() {
+Controller* App::CreateDefaultController()
+{
 	return new Controller();
 }
 
 
 /***** Private Methods *****/
-bool App::InitSDL() {
+bool App::InitSDL()
+{
 	int status = 0;
 
 	status = SDL_Init(SDL_INIT_EVERYTHING);
@@ -123,10 +135,10 @@ bool App::InitSDL() {
 		stringstream ss;
 		ss << "SDL_Init() returned error code: " << status;
 		Log::Warning(ss.str());
-		
+
 		if (strcmp(SDL_GetError(), "Unknown touch device") != 0) {
 			Log::Error((std::string)"SDL_Init() error: "
-									+SDL_GetError());
+			           +SDL_GetError());
 			return false;
 		} else {
 			Log::Info("This error is trivial and occurs frequently. Ignoring.");
@@ -139,7 +151,8 @@ bool App::InitSDL() {
 	return true;
 }
 
-void App::FinalSetup() {
+void App::InitController()
+{
 	if (!mController) {
 		mController = new Controller();
 		mController.Commit();

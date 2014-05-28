@@ -4,26 +4,32 @@
 
 
 /***** Public Methods *****/
-GameObject* Component::GetGameObject() {
-	return mGameObject;	
+GameObject* Component::GetGameObject()
+{
+	return mGameObject;
 }
 
-void Component::SetGameObject(GameObject *gameObject) {
+void Component::SetGameObject(GameObject *gameObject)
+{
 	mGameObject = gameObject;
 }
 
-Vec2& Component::Position() {
+Vec2& Component::Position()
+{
 	return GetGameObject()->Position();
 }
 
-Vec2& Component::Scale() {
+Vec2& Component::Scale()
+{
 	return GetGameObject()->Scale();
 }
 
-Vec2& Component::Pivot() {
+Vec2& Component::Pivot()
+{
 	return GetGameObject()->Pivot();
 }
 
-float& Component::Rotation() {
+float& Component::Rotation()
+{
 	return GetGameObject()->Rotation();
 }

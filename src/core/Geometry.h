@@ -1,40 +1,58 @@
 #pragma once
 #define TRUTLE_HEADER
 
+#define _USE_MATH_DEFINES
+#include <math.h>
 
-class Vec2 {
+
+struct Vec2 {
 public:
-	float 			x;
-	float 			y;
+	float 	x;
+	float 	y;
 
-					Vec2();
-					Vec2(float x, float y);
+	Vec2();
+	Vec2(float x, float y);
+	float 	Length() const;
+};
+
+struct Line {
+public:
+	Line();
+	Line(Vec2 p1, Vec2 p2);
+
+	float Length() const;
+
+	Vec2 	pt1;
+	Vec2 	pt2;
 };
 
 
 template<typename T>
-class t_Rect {
+struct t_Rect {
 public:
 	T 	x;
 	T 	y;
 	T 	w;
 	T 	h;
 
-	t_Rect() {
+	t_Rect()
+	{
 		x = 0;
 		y = 0;
 		w = 0;
 		h = 0;
 	}
 
-	t_Rect(T px, T py, T pw, T ph) {
+	t_Rect(T px, T py, T pw, T ph)
+	{
 		x = px;
 		y = py;
 		w = pw;
 		h = ph;
 	}
 
-	t_Rect(Vec2 pos, Vec2 dim) {
+	t_Rect(Vec2 pos, Vec2 dim)
+	{
 		x = pos.x;
 		y = pos.y;
 		w = dim.x;

@@ -4,7 +4,8 @@
 #include "../core/App.h"
 
 
-Scene::~Scene() {
+Scene::~Scene()
+{
 	LayerIter iter = mLayers.begin();
 	while (iter != mLayers.end()) {
 		delete *iter;
@@ -14,31 +15,38 @@ Scene::~Scene() {
 	mController = NULL;
 }
 
-void Scene::AddLayer(Layer *layer) {
+void Scene::AddLayer(Layer *layer)
+{
 	layer->SetScene(this);
 	mLayers.push_back(layer);
 }
 
-LayerList& Scene::GetLayers() {
+LayerList& Scene::GetLayers()
+{
 	return mLayers;
 }
 
-void Scene::LoadContent() {
+void Scene::LoadContent()
+{
 	// ..
 }
 
-void Scene::Update(const DeltaTime &delta) {
+void Scene::Update(const DeltaTime &delta)
+{
 	// ..
 }
 
-void Scene::SetController(Controller *controller) {
+void Scene::SetController(Controller *controller)
+{
 	mController = controller;
 }
 
-Controller* Scene::GetController() {
+Controller* Scene::GetController()
+{
 	return mController;
 }
 
-App* Scene::GetApp() {
+App* Scene::GetApp()
+{
 	return GetController()->GetApp();
 }

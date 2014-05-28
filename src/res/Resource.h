@@ -4,7 +4,8 @@
 #include "../Trutle.h"
 
 
-class Resource {
+class Resource
+{
 public:
 	enum Type {
 		UNDEFINED,
@@ -12,7 +13,7 @@ public:
 		AUDIO,
 	};
 
-						Resource(std::string res);
+	Resource(std::string res);
 	virtual 			~Resource();
 
 	virtual bool 		Load() = 0;

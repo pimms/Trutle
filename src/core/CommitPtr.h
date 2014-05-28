@@ -15,27 +15,30 @@
  * If a secondary value has been set, if will replace
  * the primary value after a call to Commit().
  *
- * In order to clear and delete the contents of a 
+ * In order to clear and delete the contents of a
  * CommitPtr, assign it to NULL and commit it.
  *
  * CommitPtr<Foo> foo;
  * foo = new Foo();
  * foo.Commit();
- * 
+ *
  * // This will delete foo
  * foo = NULL;
  * foo.Commit();
  */
 template<typename T>
-class CommitPtr {
+class CommitPtr
+{
 public:
-	CommitPtr() {
+	CommitPtr()
+	{
 		mPrimary = NULL;
 		mSecondary = NULL;
 		mSecondarySet = false;
 	}
 
-	~CommitPtr() {
+	~CommitPtr()
+	{
 		if (mPrimary) {
 			delete mPrimary;
 		}
@@ -45,7 +48,8 @@ public:
 		}
 	}
 
-	bool Commit() {
+	bool Commit()
+	{
 		if (mSecondarySet) {
 			mSecondarySet = false;
 
@@ -60,7 +64,8 @@ public:
 		return false;
 	}
 
-	void Set(T *t) {
+	void Set(T *t)
+	{
 		if (mSecondarySet && mSecondary) {
 			delete mSecondary;
 		}
@@ -69,29 +74,35 @@ public:
 		mSecondarySet = true;
 	}
 
-	T& operator* () {
-        return *mPrimary;
-    }
+	T& operator* ()
+	{
+		return *mPrimary;
+	}
 
-    T* operator-> () {    
-        return mPrimary;
-    }
+	T* operator-> ()
+	{
+		return mPrimary;
+	}
 
-    void operator=(T* t) {
-    	Set(t);
-    }
+	void operator=(T* t)
+	{
+		Set(t);
+	}
 
-    explicit operator bool() const {
-    	return mPrimary;
-    }
+	explicit operator bool() const
+	{
+		return mPrimary;
+	}
 
-    operator T*() {
-    	return mPrimary;
-    }
+	operator T*()
+	{
+		return mPrimary;
+	}
 
-    operator T*() const {
-    	return mPrimary;
-    }
+	operator T*() const
+	{
+		return mPrimary;
+	}
 
 private:
 	T* 	mPrimary;

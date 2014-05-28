@@ -3,7 +3,8 @@
 
 #include "../Trutle.h"
 
-class Log {
+class Log
+{
 public:
 	enum Level {
 		VERBOSE,

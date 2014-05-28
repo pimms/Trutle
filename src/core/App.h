@@ -12,9 +12,10 @@ class Controller;
 using std::string;
 
 
-class App {
+class App
+{
 public:
-							App();
+	App();
 	virtual 				~App();
 
 	void 					SetController(Controller *controller);
@@ -32,7 +33,7 @@ protected:
 
 private:
 	bool 					InitSDL();
-	void 					FinalSetup();
+	void 					InitController();
 
 	Window 					mWindow;
 	EventHandler 			mEventHandler;

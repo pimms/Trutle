@@ -9,9 +9,10 @@ class Scene;
 class Renderer;
 
 
-class Controller {
+class Controller
+{
 public:
-						Controller();
+	Controller();
 	virtual 			~Controller();
 
 	virtual void 		LoadContent();

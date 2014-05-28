@@ -8,7 +8,8 @@ class GameObject;
 class Vec2;
 
 
-class Component {
+class Component
+{
 public:
 	virtual 			~Component() {}
 	void 				SetGameObject(GameObject*);

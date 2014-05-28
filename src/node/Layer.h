@@ -6,12 +6,13 @@
 class Scene;
 
 
-class Layer : public GameObject {
+class Layer : public GameObject
+{
 public:
-						Layer();
-						
+	Layer();
+
 	void 				SetScene(Scene *scene);
-	
+
 	virtual Layer* 		GetParentLayer();
 	virtual Scene* 		GetScene();
 

@@ -2,28 +2,34 @@
 
 
 
-Resource::Resource(std::string res) {
+Resource::Resource(std::string res)
+{
 	mType = UNDEFINED;
 	mRefCount = 0;
 	mResName = res;
 }
 
-Resource::~Resource() {
+Resource::~Resource()
+{
 
 }
 
-std::string Resource::GetResourceName() {
+std::string Resource::GetResourceName()
+{
 	return mResName;
 }
 
-int Resource::GetReferenceCount() {
+int Resource::GetReferenceCount()
+{
 	return mRefCount;
 }
 
-void Resource::Retain() {
+void Resource::Retain()
+{
 	mRefCount++;
 }
 
-void Resource::Release() {
+void Resource::Release()
+{
 	mRefCount--;
 }

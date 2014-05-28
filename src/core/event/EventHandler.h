@@ -5,9 +5,10 @@
 #include "InputState.h"
 
 
-class EventHandler {
+class EventHandler
+{
 public:
-						EventHandler();
+	EventHandler();
 	void 				HandleEvents();
 	bool 				ShouldQuit();
 

@@ -7,51 +7,54 @@
 
 
 /***** Static Public Methods *****/
-bool Renderer::PrintOpenGLErrors(std::string context) {
+bool Renderer::PrintOpenGLErrors(std::string context)
+{
 	GLenum error = glGetError();
-    if (error != GL_NO_ERROR) {
+	if (error != GL_NO_ERROR) {
 
-    	std::string errStr = "OpenGL error (context='";
-    	errStr += context + "'): ";
+		std::string errStr = "OpenGL error (context='";
+		errStr += context + "'): ";
 
-        switch (error) {
-            case GL_INVALID_ENUM:
-                    errStr += ("GL_INVALID_ENUM");
-                    break;
-            case GL_INVALID_VALUE:
-                    errStr += ("GL_INVALID_VALUE");
-					break;
-            case GL_INVALID_OPERATION:
-                    errStr += "GL_INVALID_OPERATION";
-                    break;
-            case GL_OUT_OF_MEMORY:
-                    errStr += "GL_OUT_OF_MEMORY";
-                    break;
-            case GL_STACK_UNDERFLOW:
-                    errStr += "GL_STACK_UNDERFLOW";
-                    break;
-            case GL_STACK_OVERFLOW:
-                    errStr += "GL_STACK_OVERFLOW";
-                    break;
-            default:
-                    errStr += "UNDEFINED GL ERROR";
-        }
+		switch (error) {
+		case GL_INVALID_ENUM:
+			errStr += ("GL_INVALID_ENUM");
+			break;
+		case GL_INVALID_VALUE:
+			errStr += ("GL_INVALID_VALUE");
+			break;
+		case GL_INVALID_OPERATION:
+			errStr += "GL_INVALID_OPERATION";
+			break;
+		case GL_OUT_OF_MEMORY:
+			errStr += "GL_OUT_OF_MEMORY";
+			break;
+		case GL_STACK_UNDERFLOW:
+			errStr += "GL_STACK_UNDERFLOW";
+			break;
+		case GL_STACK_OVERFLOW:
+			errStr += "GL_STACK_OVERFLOW";
+			break;
+		default:
+			errStr += "UNDEFINED GL ERROR";
+		}
 
-        Log::Error(errStr);
+		Log::Error(errStr);
 
 		return false;
-    }
+	}
 
 	return true;
 }
 
 
 /***** Public Methods *****/
-Renderer::~Renderer() {
+Renderer::~Renderer()
+{
 
 }
 
-bool Renderer::Init(Vec2 coordBounds) {
+bool Renderer::Init(Vec2 coordBounds)
+{
 	glClearColor(0.1f, 0.1f, 0.1f ,1.f);
 
 	glDisable(GL_DEPTH_TEST);
@@ -76,7 +79,8 @@ bool Renderer::Init(Vec2 coordBounds) {
 	return true;
 }
 
-void Renderer::RenderFrame(Scene *scene) {
+void Renderer::RenderFrame(Scene *scene)
+{
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	LayerIter iter = scene->GetLayers().begin();
@@ -86,11 +90,13 @@ void Renderer::RenderFrame(Scene *scene) {
 	}
 }
 
-void Renderer::PushTransform() {
+void Renderer::PushTransform()
+{
 	glPushMatrix();
 }
 
-void Renderer::ApplyTransform(GameObject *object) {
+void Renderer::ApplyTransform(GameObject *object)
+{
 	Vec2 v = object->Position();
 	Vec2 s = object->Scale();
 
@@ -99,11 +105,13 @@ void Renderer::ApplyTransform(GameObject *object) {
 	glScalef(s.x, s.y, 1.f);
 }
 
-void Renderer::PopTransform() {
+void Renderer::PopTransform()
+{
 	glPopMatrix();
 }
 
-void Renderer::RenderTexture(Texture *tex, Rect clip, Vec2 pivot) {
+void Renderer::RenderTexture(Texture *tex, Rect clip, Vec2 pivot)
+{
 	Rect fClip;
 
 	fClip.x = clip.x / tex->GetDimensions().x;

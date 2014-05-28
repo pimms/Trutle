@@ -1,19 +1,23 @@
 #include "Layer.h"
 
 
-Layer::Layer() {
+Layer::Layer()
+{
 	mScene = NULL;
 }
 
-void Layer::SetScene(Scene *scene) {
+void Layer::SetScene(Scene *scene)
+{
 	mScene = scene;
 }
 
-Layer* Layer::GetParentLayer() {
+Layer* Layer::GetParentLayer()
+{
 	return this;
 }
 
-Scene* Layer::GetScene() {
+Scene* Layer::GetScene()
+{
 	if (GetParent()) {
 		return GetParent()->GetScene();
 	}

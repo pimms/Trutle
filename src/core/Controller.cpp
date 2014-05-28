@@ -6,7 +6,8 @@
 #include "../node/Layer.h"
 
 
-Controller::Controller() {
+Controller::Controller()
+{
 	mScene = NULL;
 	mRenderer = NULL;
 	mApp = NULL;
@@ -14,13 +15,15 @@ Controller::Controller() {
 	mScene.Commit();
 }
 
-Controller::~Controller() {
+Controller::~Controller()
+{
 	if (mRenderer) {
 		delete mRenderer;
 	}
 }
 
-void Controller::LoadContent() {
+void Controller::LoadContent()
+{
 	mRenderer = CreateRenderer();
 	if (!mRenderer->Init(Vec2(640, 480))) {
 		Log::Error("Failed to initialize Renderer");
@@ -31,52 +34,62 @@ void Controller::LoadContent() {
 	}
 }
 
-void Controller::SetScene(Scene *scene) {
+void Controller::SetScene(Scene *scene)
+{
 	scene->SetController(this);
 	mScene = scene;
 }
 
 
-Scene* Controller::GetScene() {
+Scene* Controller::GetScene()
+{
 	return mScene;
 }
 
-void Controller::SceneTransition() {
+void Controller::SceneTransition()
+{
 	if (mScene.Commit()) {
 		mScene->LoadContent();
 	}
 }
 
-void Controller::SetApp(App *app) {
+void Controller::SetApp(App *app)
+{
 	mApp = app;
 }
 
-App* Controller::GetApp() {
+App* Controller::GetApp()
+{
 	return mApp;
 }
 
-void Controller::Update(DeltaTime &delta) {
+void Controller::Update(DeltaTime &delta)
+{
 	DispatchUpdate(delta);
 	DrawScene();
 }
 
 
 /***** Protected Methods *****/
-Renderer* Controller::CreateRenderer() {
+Renderer* Controller::CreateRenderer()
+{
 	return new Renderer();
 }
 
-Scene* Controller::CreateDefaultScene() {
+Scene* Controller::CreateDefaultScene()
+{
 	return new Scene();
 }
 
-void Controller::DrawScene() {
+void Controller::DrawScene()
+{
 	if (mScene) {
 		mRenderer->RenderFrame(mScene);
 	}
 }
 
-void Controller::DispatchUpdate(DeltaTime &delta) {
+void Controller::DispatchUpdate(DeltaTime &delta)
+{
 	if (!mScene) {
 		return;
 	}
@@ -85,7 +98,7 @@ void Controller::DispatchUpdate(DeltaTime &delta) {
 	LayerIter liter = layers->begin();
 
 	mScene->Update(delta);
-	
+
 	while (liter != layers->end()) {
 		(*liter)->UpdateSelfAndChildren(delta);
 		liter++;

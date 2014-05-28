@@ -28,12 +28,13 @@ using std::unordered_map;
 
 
 
-class GameObject {
-private: 
+class GameObject
+{
+private:
 	friend class __ComponentManager;
 
-public:	
-						GameObject();
+public:
+	GameObject();
 	virtual 			~GameObject();
 
 	void 				LoadTexture(std::string texfile);
@@ -80,14 +81,14 @@ protected:
 
 private:
 	void 				ReleaseTexture();
-	
+
 	GameObject 			*mParent;
 
 	// Components are identified by their type, and only
 	// one component per type can be attached to a game object
 	// at any given time.
 	unordered_map<const type_info*, Component*>
-						mComponents;
+	mComponents;
 };
 
 
@@ -95,15 +96,16 @@ private:
 // RemoveComponent() use templates to find and create
 // components. The addition or removal of the component
 // does then not occur until the start of the next frame.
-class __ComponentManager {
+class __ComponentManager
+{
 public:
-						__ComponentManager(GameObject*);
+	__ComponentManager(GameObject*);
 
 	void 				AddComponent(Component*, const type_info*);
 	void 				RemoveComponent(const type_info*);
 
-	unordered_map<const type_info*, Component*>* 
-						GetComponentList();
+	unordered_map<const type_info*, Component*>*
+	GetComponentList();
 
 	// Execute all commands in sCommands. Commands are executed in
 	// the following order:
@@ -112,7 +114,7 @@ public:
 	static void 		ExecuteCommands();
 
 	// Static methods to check if a component of a certain type_info
-	// has been added or removed from a game object, but the 
+	// has been added or removed from a game object, but the
 	// action has not yet been executed.
 	static bool 		HasBeenAdded(GameObject*, const type_info*);
 	static bool 		HasBeenRemoved(GameObject*, const type_info*);
@@ -129,21 +131,25 @@ private:
 		char typeID;
 	};
 
-	// NewComponentCmd adds the command  to the component 
+	// NewComponentCmd adds the command  to the component
 	// list of the GameObject and calls OnStart() on it.
-	#define _CMP_MGR_NEW_COMPONENT_ID 1
+#define _CMP_MGR_NEW_COMPONENT_ID 1
 	struct NewComponentCmd : Command {
-		NewComponentCmd() 
-			{ typeID = _CMP_MGR_NEW_COMPONENT_ID; };
+		NewComponentCmd()
+		{
+			typeID = _CMP_MGR_NEW_COMPONENT_ID;
+		};
 		void Execute();
 	};
 
-	// RemoveComponentCmd calls OnDestroy() on the 
+	// RemoveComponentCmd calls OnDestroy() on the
 	// component, and removes it from the GameObject-list.
-	#define _CMP_MGR_REMOVE_COMPONENT_ID 2
+#define _CMP_MGR_REMOVE_COMPONENT_ID 2
 	struct RemoveComponentCmd : Command {
-		RemoveComponentCmd() 
-			{ typeID = _CMP_MGR_REMOVE_COMPONENT_ID; };
+		RemoveComponentCmd()
+		{
+			typeID = _CMP_MGR_REMOVE_COMPONENT_ID;
+		};
 		void Execute();
 	};
 
@@ -152,28 +158,30 @@ private:
 
 
 
-// Components are retrieved from this function. The 
-// component of type _CompT is returned if it is 
+// Components are retrieved from this function. The
+// component of type _CompT is returned if it is
 // attached to the GameObject.
-template<class _CompT> 
-_CompT* GetComponent(GameObject *gameObject) {
+template<class _CompT>
+_CompT* GetComponent(GameObject *gameObject)
+{
 	__ComponentManager mgr(gameObject);
 
 	unordered_map<const type_info*, Component*>* comps;
 	comps = mgr.GetComponentList();
 
 	if (comps->count(&typeid(_CompT)) != 0) {
-        return static_cast<_CompT*>((*comps)[&typeid(_CompT)]);
-    } 
+		return static_cast<_CompT*>((*comps)[&typeid(_CompT)]);
+	}
 
-    return NULL;
+	return NULL;
 }
 
 // The Component is created inside the template-function,
 // but is given to a __ComponentManager for initialization
 // and attachment to the game object.
-template<class _CompT> 
-_CompT* AddComponent(GameObject *gameObject) {
+template<class _CompT>
+_CompT* AddComponent(GameObject *gameObject)
+{
 	__ComponentManager mgr(gameObject);
 
 	unordered_map<const type_info*, Component*>* comps;
@@ -182,17 +190,17 @@ _CompT* AddComponent(GameObject *gameObject) {
 	const type_info *type = &typeid(_CompT);
 
 	if (comps->count(type) != 0 &&
-		!__ComponentManager::HasBeenAdded(gameObject, type)) {
+	        !__ComponentManager::HasBeenAdded(gameObject, type)) {
 		std::string err = 	(std::string)
-							"Component already exists on GameObject!"
-						  	" component: " + typeid(_CompT).name();
+		                    "Component already exists on GameObject!"
+		                    " component: " + typeid(_CompT).name();
 		Log::Debug(err);
 		return NULL;
 	}
 
 	_CompT *component = new _CompT();
 	component->SetGameObject(gameObject);
-	
+
 	mgr.AddComponent(component, &typeid(_CompT));
 
 	return component;
@@ -202,7 +210,8 @@ _CompT* AddComponent(GameObject *gameObject) {
 // The component is given to a __ComponentManager, who
 // will handle the destruction process further.
 template<class _CompT>
-bool RemoveComponent(GameObject *gameObject) {
+bool RemoveComponent(GameObject *gameObject)
+{
 	__ComponentManager mgr(gameObject);
 
 	unordered_map<const type_info*, Component*> *comps;
@@ -211,8 +220,7 @@ bool RemoveComponent(GameObject *gameObject) {
 	const type_info *type = &typeid(_CompT);
 
 	if (comps->count(type) != 0 &&
-		!__ComponentManager::HasBeenRemoved(gameObject, type)) 
-	{
+	        !__ComponentManager::HasBeenRemoved(gameObject, type)) {
 		mgr.RemoveComponent(&typeid(_CompT));
 		return true;
 	}
