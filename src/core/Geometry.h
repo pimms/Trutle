@@ -15,6 +15,7 @@ public:
 	float 	Length() const;
 };
 
+
 struct Line {
 public:
 	Line();
@@ -25,6 +26,24 @@ public:
 	Vec2 	pt1;
 	Vec2 	pt2;
 };
+
+
+// Not geometry but YOLO, it's similar to the other types in here
+template<typename T>
+struct t_Color {
+public:
+	t_Color(T r, T g, T b, T a) 
+		:	r(r), g(g), b(b), a(a)
+	{ }
+
+	T 	r;
+	T	g;
+	T	b;
+	T	a;
+};
+
+typedef t_Color<float> Color;
+typedef t_Color<unsigned char> ColorUB;
 
 
 template<typename T>
