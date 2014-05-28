@@ -32,6 +32,7 @@ public:
 template<typename T>
 struct t_Color {
 public:
+	t_Color() {};
 	t_Color(T r, T g, T b, T a) 
 		:	r(r), g(g), b(b), a(a)
 	{ }
