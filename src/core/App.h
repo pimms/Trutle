@@ -5,7 +5,6 @@
 #include "Window.h"
 #include "event/EventHandler.h"
 #include "Stack.h"
-#include "CommitPtr.h"
 
 class Renderer;
 class Controller;
@@ -37,7 +36,9 @@ private:
 
 	Window 					mWindow;
 	EventHandler 			mEventHandler;
-	CommitPtr<Controller> 	mController;
+
+	Controller 				*mController;
+	Controller 				*mNextController;
 
 	bool 					mInitialized;
 };

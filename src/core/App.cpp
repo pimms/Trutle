@@ -13,26 +13,31 @@ using std::stringstream;
 App::App()
 {
 	mController = NULL;
+	mNextController = NULL;
 	mInitialized = false;
-
-	mController.Commit();
 }
 
 App::~App()
 {
-
+	if (mController)
+		delete mController;
+	if (mNextController)
+		delete mNextController;
 }
 
 void App::SetController(Controller *controller)
 {
-	if (controller) {
-		controller->SetApp(this);
+	if (!controller) {
+		Log::Debug("Attempted to set a NULL-Controller");
+		return;
 	}
 
-	mController = controller;
+	controller->SetApp(this);
 
 	if (!mController) {
-		mController.Commit();
+		mController = controller;
+	} else {
+		mNextController = controller;
 	}
 }
 
@@ -96,7 +101,10 @@ int App::MainLoop()
 		mController->Update(deltaTime);
 		mWindow.FlipBuffer();
 
-		if (mController.Commit()) {
+		if (mNextController) {
+			delete mController;
+			mController = mNextController;
+			mNextController = NULL;
 			mController->LoadContent();
 		}
 
@@ -155,7 +163,6 @@ void App::InitController()
 {
 	if (!mController) {
 		mController = new Controller();
-		mController.Commit();
 	}
 
 	mController->LoadContent();

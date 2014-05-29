@@ -2,7 +2,6 @@
 #define TRUTLE_HEADER
 
 #include "../Trutle.h"
-#include "CommitPtr.h"
 
 class App;
 class Scene;
@@ -33,7 +32,8 @@ protected:
 	virtual void 		DispatchUpdate(DeltaTime &delta);
 
 	Renderer 			*mRenderer;
-	CommitPtr<Scene> 	mScene;
+	Scene  				*mScene;
+	Scene 				*mNextScene;
 
 private:
 	App 				*mApp;

@@ -9,17 +9,18 @@
 Controller::Controller()
 {
 	mScene = NULL;
+	mNextScene = NULL;
 	mRenderer = NULL;
 	mApp = NULL;
 
-	mScene.Commit();
 }
 
 Controller::~Controller()
 {
-	if (mRenderer) {
+	if (mRenderer) 
 		delete mRenderer;
-	}
+	if (mNextScene)
+		delete mNextScene;
 }
 
 void Controller::LoadContent()
@@ -37,7 +38,7 @@ void Controller::LoadContent()
 void Controller::SetScene(Scene *scene)
 {
 	scene->SetController(this);
-	mScene = scene;
+	mNextScene = scene;
 }
 
 
@@ -48,8 +49,12 @@ Scene* Controller::GetScene()
 
 void Controller::SceneTransition()
 {
-	if (mScene.Commit()) {
+	if (mNextScene) {
+		if (mScene)
+			delete mScene;
+		mScene = mNextScene;
 		mScene->LoadContent();
+		mNextScene = NULL;
 	}
 }
 
