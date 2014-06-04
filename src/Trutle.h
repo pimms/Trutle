@@ -37,12 +37,9 @@ struct DeltaTime {
 };
 
 
-
-//Don't include Trutle files from other
-//Trutle files.
+//Don't include Trutle files from other //Trutle files.
 #ifndef TRUTLE_HEADER
 #	include "core/App.h"
-#	include "core/CommitPtr.h"
 #	include "core/Controller.h"
 #	include "core/Renderer.h"
 #	include "core/Stack.h"
