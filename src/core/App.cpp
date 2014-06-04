@@ -5,8 +5,56 @@
 #include "../res/ResourceManager.h"
 #include "../node/GameObject.h"
 #include <sstream>
+#include <time.h>
 
 using std::stringstream;
+
+
+#ifdef _WIN32
+	float GetDeltaTime()
+	{
+		static float ticks = -100.f;
+		static bool firstCall = true;
+
+		struct timeval time;
+		gettimeofday(&time, NULL);
+
+		double newdouble = double(time.tv_sec) + double(time.tv_usec / 1000000.0);
+		float dt = newdouble - ticks;
+
+		ticks = double(time.tv_sec) + double(time.tv_usec / 1000000.0);
+
+		if (firstCall) {
+			firstCall = false;
+			dt = 1.f / 60.f;
+		}
+
+		return dt;
+	}
+#else
+#	include <unistd.h>
+#	include <sys/time.h>
+	float GetDeltaTime()
+	{
+		static double ticks = -100.f;
+		static bool firstCall = true;
+
+		struct timeval time;
+		gettimeofday(&time, NULL);
+
+		double newTick = double(time.tv_sec) + double(time.tv_usec / 1000000.0);
+		float dt = newTick - ticks;
+
+		ticks = double(time.tv_sec) + double(time.tv_usec / 1000000.0);
+
+		if (firstCall) {
+			firstCall = false;
+			dt = 1.f/60.f;
+		}
+
+		return dt;
+	}
+#endif
 
 
 /***** Public Methods *****/
@@ -92,9 +140,11 @@ int App::MainLoop()
 
 	InitController();
 
-	DeltaTime deltaTime = { 1.f / 60.f };
+	DeltaTime deltaTime = { GetDeltaTime() };
 
 	while (!mQuit && !mEventHandler.ShouldQuit()) {
+		deltaTime.dt = GetDeltaTime();
+
 		__ComponentManager::ExecuteCommands();
 		mEventHandler.ClearFreshFlags();
 
@@ -111,6 +161,7 @@ int App::MainLoop()
 
 		mController->SceneTransition();
 		Renderer::PrintOpenGLErrors("Post-frame");
+
 	}
 
 	return 0;
