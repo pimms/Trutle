@@ -25,6 +25,8 @@ public:
 	bool 					Initialize(int argc, char *argv[]);
 	int 					MainLoop();
 
+	void 					Quit();
+
 protected:
 	virtual std::string 	GetWindowTitle();
 	virtual bool 			InitApplication(int argc, char **argv);
@@ -41,6 +43,7 @@ private:
 	Controller 				*mNextController;
 
 	bool 					mInitialized;
+	bool 					mQuit;
 };
 
 #undef TRUTLE_HEADER

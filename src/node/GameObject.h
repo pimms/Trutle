@@ -48,6 +48,8 @@ public:
 	Vec2& 				Scale();
 	Vec2& 				Pivot();
 
+	Vec2 				GetCenterPosition();
+
 	void 				AddChild(GameObject *object);
 	void 				RemoveChild(GameObject *object);
 	ChildList* 			GetChildren();

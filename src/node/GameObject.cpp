@@ -99,6 +99,18 @@ Vec2& GameObject::Pivot()
 	return mPivot;
 }
 
+Vec2 GameObject::GetCenterPosition()
+{
+	Vec2 pos = Position();
+
+	if (mTexture) {
+		pos.x += mTexture->GetDimensions().x * Pivot().x;
+		pos.y += mTexture->GetDimensions().y * Pivot().y;
+	}
+
+	return pos;
+}
+
 void GameObject::AddChild(GameObject *object)
 {
 	mChildren.push_back(object);

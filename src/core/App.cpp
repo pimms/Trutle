@@ -15,6 +15,7 @@ App::App()
 	mController = NULL;
 	mNextController = NULL;
 	mInitialized = false;
+	mQuit = false;
 }
 
 App::~App()
@@ -67,7 +68,7 @@ bool App::Initialize(int argc, char *argv[])
 		return false;
 	}
 
-	if (!mWindow.CreateWindow(Vec2(640, 480))) {
+	if (!mWindow.CreateWindow(Vec2(1280.f, 720.f))) {
 		printf("Failed to create window\n");
 		return false;
 	}
@@ -93,7 +94,7 @@ int App::MainLoop()
 
 	DeltaTime deltaTime = { 1.f / 60.f };
 
-	while (!mEventHandler.ShouldQuit()) {
+	while (!mQuit && !mEventHandler.ShouldQuit()) {
 		__ComponentManager::ExecuteCommands();
 		mEventHandler.ClearFreshFlags();
 
@@ -113,6 +114,11 @@ int App::MainLoop()
 	}
 
 	return 0;
+}
+
+void App::Quit()
+{
+	mQuit = true;
 }
 
 
