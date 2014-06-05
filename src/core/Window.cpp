@@ -56,3 +56,15 @@ void Window::SetTitle(std::string title)
 {
 	SDL_SetWindowTitle(mWindow, title.c_str());
 }
+
+Vec2 Window::GetWindowSize()
+{
+	int x, y;
+	SDL_GetWindowSize(mWindow, &x, &y);
+	return Vec2(x, y);
+}
+
+void Window::ResizeContext(Vec2 size)
+{
+	glViewport(0, 0, size.x, size.y);
+}

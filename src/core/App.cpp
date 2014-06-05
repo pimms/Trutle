@@ -59,6 +59,7 @@ using std::stringstream;
 
 /***** Public Methods *****/
 App::App()
+	:	mEventHandler(this)
 {
 	mController = NULL;
 	mNextController = NULL;

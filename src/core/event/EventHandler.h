@@ -4,11 +4,12 @@
 #include "../../Trutle.h"
 #include "InputState.h"
 
+class App;
 
 class EventHandler
 {
 public:
-	EventHandler();
+	EventHandler(App *app);
 	void 				HandleEvents();
 	bool 				ShouldQuit();
 
@@ -17,8 +18,10 @@ public:
 
 private:
 	bool 				mShouldQuit;
-
 	InputState 			mInputState;
+	App 				*mApp;
+
+	void ResizeWindow(int x, int y);
 };
 
 

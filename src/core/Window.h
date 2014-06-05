@@ -21,6 +21,10 @@ public:
 
 	void 			SetTitle(std::string title);
 
+	Vec2 			GetWindowSize();
+
+	void 			ResizeContext(Vec2 size);
+
 private:
 	SDL_Window 		*mWindow;
 	SDL_GLContext 	mGLContext;
