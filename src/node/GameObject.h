@@ -48,6 +48,7 @@ public:
 	Vec2& 				Scale();
 	Vec2& 				Pivot();
 	virtual Vec2 		WorldPosition();
+	virtual float 		WorldRotation();
 
 	Vec2 				GetCenterPosition();
 

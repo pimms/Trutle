@@ -22,6 +22,11 @@ Vec2 Layer::WorldPosition()
 	return Vec2(0.f, 0.f);
 }
 
+float Layer::WorldRotation()
+{
+	return 0.f;
+}
+
 Scene* Layer::GetScene()
 {
 	if (GetParent()) {

@@ -121,6 +121,7 @@ bool App::Initialize(int argc, char *argv[])
 		printf("Failed to create window\n");
 		return false;
 	}
+
 	mWindow.SetTitle(GetWindowTitle());
 
 	if (!InitApplication(argc, argv)) {

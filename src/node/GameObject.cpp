@@ -112,6 +112,17 @@ Vec2 GameObject::WorldPosition()
 	return pos;
 }
 
+float GameObject::WorldRotation()
+{
+	float rot = Rotation();
+	
+	if (GetParent()) {
+		rot += GetParent()->WorldRotation();
+	}
+
+	return rot;
+}
+
 Vec2 GameObject::GetCenterPosition()
 {
 	Vec2 pos = Position();
