@@ -15,6 +15,7 @@ public:
 
 	virtual Layer* 		GetParentLayer();
 	virtual Scene* 		GetScene();
+	Vec2 				WorldPosition();
 
 protected:
 

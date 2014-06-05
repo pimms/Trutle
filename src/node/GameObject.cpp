@@ -99,6 +99,19 @@ Vec2& GameObject::Pivot()
 	return mPivot;
 }
 
+Vec2 GameObject::WorldPosition()
+{
+	Vec2 pos = Position();
+
+	if (GetParent()) {
+		Vec2 par = mParent->WorldPosition();
+		pos.x += par.x;
+		pos.y += par.y;
+	}
+
+	return pos;
+}
+
 Vec2 GameObject::GetCenterPosition()
 {
 	Vec2 pos = Position();
