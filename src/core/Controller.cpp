@@ -26,7 +26,7 @@ Controller::~Controller()
 void Controller::LoadContent()
 {
 	mRenderer = CreateRenderer();
-	if (!mRenderer->Init(Vec2(640, 480))) {
+	if (!mRenderer->Init(Vec2(1280.f, 720.f))) {
 		Log::Error("Failed to initialize Renderer");
 	}
 
