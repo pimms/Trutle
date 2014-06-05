@@ -78,6 +78,14 @@ public:
 		w = dim.x;
 		h = dim.y;
 	}
+
+	bool Overlaps(t_Rect<T> t) 
+	{
+		return !(x >= t.x + t.w && 
+				x + w <= t.x 	&&
+				y >= t.y + t.h 	&&
+				y + h <= t.y);
+	}
 };
 
 typedef t_Rect<int>   RectI;
