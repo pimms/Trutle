@@ -8,6 +8,11 @@ InputState::InputState()
 		mKeyBits[i] = 0;
 		mFreshKeyBits[i] = 0;
 	}
+
+	for (int i=0; i<2; i++) {
+		mMouseBits[i] = 0;
+		mFreshMouseBits[i] = 0;
+	}
 }
 
 void InputState::HandleKeyEvent(SDL_KeyboardEvent *evt)
@@ -19,10 +24,34 @@ void InputState::HandleKeyEvent(SDL_KeyboardEvent *evt)
 	}
 }
 
+void InputState::HandleMouseEvent(SDL_MouseButtonEvent *evt)
+{
+	int index = evt->button / 32;
+	int bit = evt->button % 32;
+
+	if (evt->type == SDL_MOUSEBUTTONDOWN) {
+		mMouseBits[index] |= (1 << bit);	
+		if (!IsMouseKeyFresh(evt->button)) 
+			mFreshMouseBits[index] |= (1<<bit);
+	} else {
+		mMouseBits[index] &= ~(1 << bit);
+	}
+}
+
+void InputState::HandleMouseEvent(SDL_MouseMotionEvent *evt)
+{
+	mMousePos.x = evt->x;
+	mMousePos.y = evt->y;
+}
+
 void InputState::InvalidateFreshBits()
 {
 	for (int i=0; i<16; i++) {
 		mFreshKeyBits[i] = 0;
+	}
+
+	for (int i=0; i<2; i++) {
+		mFreshMouseBits[i] = 0;
 	}
 }
 
@@ -50,6 +79,35 @@ bool InputState::IsKeyFresh(SDL_Keycode key) const
 
 	Log::Verbose("InputState::IsKeyFresh(): Invalid param");
 	return false;
+}
+
+bool InputState::IsMouseKeyDown(Uint8 key) const
+{
+	if (key < 64) {
+		int index = key / 32;
+		int bit = key % 32;
+
+		return mMouseBits[index] & (1 << bit);
+	}
+
+	return false;
+}
+
+bool InputState::IsMouseKeyFresh(Uint8 key) const
+{	
+	if (key < 64) {
+		int index = key / 32;
+		int bit = key % 32;
+
+		return mFreshMouseBits[index] & (1 << bit);
+	}
+
+	return false;
+}
+
+Vec2 InputState::GetMousePosition() const
+{
+	return mMousePos;
 }
 
 

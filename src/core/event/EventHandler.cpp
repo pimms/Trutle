@@ -22,10 +22,12 @@ void EventHandler::HandleEvents()
 			break;
 
 		case SDL_MOUSEMOTION:
+			mInputState.HandleMouseEvent(&evt.motion);
 			break;
+
 		case SDL_MOUSEBUTTONDOWN:
-			break;
 		case SDL_MOUSEBUTTONUP:
+			mInputState.HandleMouseEvent(&evt.button);
 			break;
 		}
 	}
