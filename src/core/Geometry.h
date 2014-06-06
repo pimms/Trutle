@@ -81,7 +81,7 @@ public:
 
 	bool Overlaps(t_Rect<T> t) 
 	{
-		return !(x >= t.x + t.w && 
+		return (x >= t.x + t.w 	&& 
 				x + w <= t.x 	&&
 				y >= t.y + t.h 	&&
 				y + h <= t.y);
