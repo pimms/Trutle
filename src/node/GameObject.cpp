@@ -84,7 +84,17 @@ Vec2& GameObject::Position()
 	return mPosition;
 }
 
+Vec2 GameObject::Position() const
+{
+	return mPosition;
+}
+
 float& GameObject::Rotation()
+{
+	return mRotation;
+}
+
+float GameObject::Rotation() const
 {
 	return mRotation;
 }
@@ -94,7 +104,17 @@ Vec2& GameObject::Scale()
 	return mScale;
 }
 
+Vec2 GameObject::Scale() const
+{
+	return mScale;
+}
+
 Vec2& GameObject::Pivot()
+{
+	return mPivot;
+}
+
+Vec2 GameObject::Pivot() const
 {
 	return mPivot;
 }
@@ -115,7 +135,7 @@ Vec2 GameObject::WorldPosition()
 float GameObject::WorldRotation()
 {
 	float rot = Rotation();
-	
+
 	if (GetParent()) {
 		rot += GetParent()->WorldRotation();
 	}

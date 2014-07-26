@@ -20,7 +20,7 @@ public:
 
 	bool 			IsMouseKeyDown(Uint8 key) const;
 	bool 			IsMouseKeyFresh(Uint8 key) const;
-	
+
 	Vec2 			GetMousePosition() const;
 
 private:

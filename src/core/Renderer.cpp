@@ -79,17 +79,6 @@ bool Renderer::Init(Vec2 coordBounds)
 	return true;
 }
 
-void Renderer::RenderFrame(Scene *scene)
-{
-	glClear(GL_COLOR_BUFFER_BIT);
-
-	LayerIter iter = scene->GetLayers().begin();
-	while (iter != scene->GetLayers().end()) {
-		(*iter)->Render(this);
-		iter++;
-	}
-}
-
 void Renderer::PushTransform()
 {
 	glPushMatrix();

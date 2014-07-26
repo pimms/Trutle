@@ -26,7 +26,7 @@ all: $(OBJ)
 	@echo "COMPILE $<"
 	@$(CXX) $(FLG) -o $@ -c $< $(INC) $(LIBS)
 
-install: all
+install: $(LIBTARGET)
 	@echo "COPYING LIB"
 	@mkdir -p $(LIBINSTALLDIR)
 	@cp -f $(LIBTARGET) $(LIBINSTALLDIR)

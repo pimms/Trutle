@@ -33,7 +33,7 @@ template<typename T>
 struct t_Color {
 public:
 	t_Color() {};
-	t_Color(T r, T g, T b, T a) 
+	t_Color(T r, T g, T b, T a)
 		:	r(r), g(g), b(b), a(a)
 	{ }
 
@@ -79,12 +79,12 @@ public:
 		h = dim.y;
 	}
 
-	bool Overlaps(t_Rect<T> t) 
+	bool Overlaps(t_Rect<T> t)
 	{
-		return (x >= t.x + t.w 	&& 
-				x + w <= t.x 	&&
-				y >= t.y + t.h 	&&
-				y + h <= t.y);
+		return !(x >= t.x + t.w 	&&
+		         x + w <= t.x 	&&
+		         y >= t.y + t.h 	&&
+		         y + h <= t.y);
 	}
 };
 

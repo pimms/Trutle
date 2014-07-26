@@ -44,9 +44,13 @@ public:
 	virtual void   		Render(Renderer *renderer);
 
 	Vec2& 				Position();
+	Vec2 				Position() const;
 	float&		 		Rotation();
+	float 				Rotation() const;
 	Vec2& 				Scale();
+	Vec2 				Scale() const;
 	Vec2& 				Pivot();
+	Vec2 				Pivot() const;
 	virtual Vec2 		WorldPosition();
 	virtual float 		WorldRotation();
 

@@ -5,6 +5,7 @@
 
 class App;
 class Layer;
+class Renderer;
 class Controller;
 
 typedef std::list<Layer*> 	LayerList;
@@ -20,6 +21,7 @@ public:
 
 	virtual void 		LoadContent();
 	virtual void 		Update(const DeltaTime &delta);
+	virtual void 		Render(Renderer *renderer);
 
 	void 				SetController(Controller *controller);
 	Controller* 		GetController();

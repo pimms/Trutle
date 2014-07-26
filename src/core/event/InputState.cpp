@@ -30,8 +30,8 @@ void InputState::HandleMouseEvent(SDL_MouseButtonEvent *evt)
 	int bit = evt->button % 32;
 
 	if (evt->type == SDL_MOUSEBUTTONDOWN) {
-		mMouseBits[index] |= (1 << bit);	
-		if (!IsMouseKeyFresh(evt->button)) 
+		mMouseBits[index] |= (1 << bit);
+		if (!IsMouseKeyFresh(evt->button))
 			mFreshMouseBits[index] |= (1<<bit);
 	} else {
 		mMouseBits[index] &= ~(1 << bit);
@@ -94,7 +94,7 @@ bool InputState::IsMouseKeyDown(Uint8 key) const
 }
 
 bool InputState::IsMouseKeyFresh(Uint8 key) const
-{	
+{
 	if (key < 64) {
 		int index = key / 32;
 		int bit = key % 32;

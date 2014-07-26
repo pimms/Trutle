@@ -2,6 +2,7 @@
 #include "Layer.h"
 #include "../core/Controller.h"
 #include "../core/App.h"
+#include "../core/Renderer.h"
 
 
 Scene::~Scene()
@@ -34,6 +35,14 @@ void Scene::LoadContent()
 void Scene::Update(const DeltaTime &delta)
 {
 	// ..
+}
+
+void Scene::Render(Renderer* renderer)
+{
+	LayerIter it = mLayers.begin();
+	for (; it != mLayers.end(); it++) {
+		(*it)->Render(renderer);
+	}
 }
 
 void Scene::SetController(Controller *controller)

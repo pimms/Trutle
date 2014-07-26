@@ -35,9 +35,9 @@ void EventHandler::HandleEvents()
 
 		case SDL_WINDOWEVENT:
 			switch (evt.window.event) {
-				case SDL_WINDOWEVENT_RESIZED:
-					ResizeWindow(evt.window.data1, evt.window.data2);
-					break;
+			case SDL_WINDOWEVENT_RESIZED:
+				ResizeWindow(evt.window.data1, evt.window.data2);
+				break;
 			}
 			break;
 		}
@@ -60,7 +60,7 @@ void EventHandler::ClearFreshFlags()
 }
 
 
-void EventHandler::ResizeWindow(int x, int y) 
+void EventHandler::ResizeWindow(int x, int y)
 {
 	Window *window = mApp->GetWindow();
 	window->ResizeContext(Vec2(x, y));

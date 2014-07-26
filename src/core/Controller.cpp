@@ -17,7 +17,7 @@ Controller::Controller()
 
 Controller::~Controller()
 {
-	if (mRenderer) 
+	if (mRenderer)
 		delete mRenderer;
 	if (mNextScene)
 		delete mNextScene;
@@ -88,8 +88,10 @@ Scene* Controller::CreateDefaultScene()
 
 void Controller::DrawScene()
 {
+	glClear(GL_COLOR_BUFFER_BIT);
+	
 	if (mScene) {
-		mRenderer->RenderFrame(mScene);
+		mScene->Render(mRenderer);
 	}
 }
 

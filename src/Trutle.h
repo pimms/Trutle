@@ -49,4 +49,6 @@ struct DeltaTime {
 #	include "node/Layer.h"
 #	include "node/Scene.h"
 #	include "node/Component.h"
+#	include "core/RenderTexture.h"
+#	include "res/Texture.h"
 #endif
