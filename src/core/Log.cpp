@@ -10,36 +10,54 @@ void Log::SetLevel(Log::Level level)
 	sLoglevel = level;
 }
 
-void Log::Verbose(std::string str)
+void Log::Verbose(std::string format, ...)
 {
-	Write("[VERBOSE]: " + str, VERBOSE);
+	va_list args;
+	va_start(args, format);
+	Write(VERBOSE, format.c_str(), args);
+	va_end(args);
 }
 
-void Log::Info(std::string str)
+void Log::Info(std::string format, ...)
 {
-	Write("[INFO]: " + str, INFO);
+	va_list args;
+	va_start(args, format);
+	Write(INFO, "[INFO]: " + format, args);
+	va_end(args);
 }
 
-void Log::Debug(std::string str)
+void Log::Debug(std::string format, ...)
 {
-	Write("[DEBUG]: " + str, DEBUG);
+	va_list args;
+	va_start(args, format);
+	Write(DEBUG, "[DEBUG]: " + format, args);
+	va_end(args);
 }
 
-void Log::Warning(std::string str)
+void Log::Warning(std::string format, ...)
 {
-	Write("[WARNING]: " + str, WARNING);
+	va_list args;
+	va_start(args, format);
+	Write(WARNING, "[WARNING]: " +  WARNING, args);
+	va_end(args);
 }
 
-void Log::Error(std::string str)
+void Log::Error(std::string format, ...)
 {
-	Write("[ERROR]: " + str, ERROR);
+	va_list args;
+	va_start(args, format);
+	Write(ERROR, "[ERROR]: " + format, args);
+	va_end(args);
 }
 
 
 /***** Static Private Methods *****/
-void Log::Write(std::string str, Level lvl)
+void Log::Write(Level lvl, std::string format, va_list args)
 {
 	if (lvl >= sLoglevel) {
-		printf("%s\n", str.c_str());
+		char *str = new char[format.length() * 3];
+		vsprintf(str, format.c_str(), args);
+		printf("%s", str);
+		delete[] str;
 	}
 }

@@ -24,6 +24,8 @@ Window::~Window()
 
 bool Window::CreateWindow(Vec2 resolution)
 {
+	mResolution = resolution;
+
 	mWindow = SDL_CreateWindow(
 	              "Trutle",
 	              SDL_WINDOWPOS_UNDEFINED,
@@ -57,11 +59,16 @@ void Window::SetTitle(std::string title)
 	SDL_SetWindowTitle(mWindow, title.c_str());
 }
 
-Vec2 Window::GetWindowSize()
+Vec2 Window::GetWindowSize() const
 {
 	int x, y;
 	SDL_GetWindowSize(mWindow, &x, &y);
 	return Vec2(x, y);
+}
+
+Vec2 Window::GetResolution() const
+{
+	return mResolution;
 }
 
 void Window::ResizeContext(Vec2 size)

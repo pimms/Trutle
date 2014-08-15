@@ -1,11 +1,14 @@
 #pragma once
 
+#define TRUTLE_HEADER
+
 #ifdef _WIN32
 	#include <Trutle.h>
 #else
-	#include <trutle/Trutle.h>
+	#include "../Trutle.h"
 #endif
 
+#include "Geometry.h"
 
 class RenderTexture {
 public:
@@ -26,3 +29,5 @@ private:
 	GLuint _tex;
 };
 
+
+#undef TRUTLE_HEADER

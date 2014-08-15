@@ -21,7 +21,8 @@ public:
 
 	void 			SetTitle(std::string title);
 
-	Vec2 			GetWindowSize();
+	Vec2 			GetWindowSize() const;
+	Vec2 			GetResolution() const;
 
 	void 			ResizeContext(Vec2 size);
 
@@ -30,6 +31,7 @@ private:
 	SDL_GLContext 	mGLContext;
 
 	Vec2 			mResolution;
+	Vec2 			mPixelSize;
 	bool 			mFullscreen;
 };
 
