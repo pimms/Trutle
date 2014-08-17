@@ -2,6 +2,7 @@
 
 
 Log::Level Log::sLoglevel = Log::Level::VERBOSE;
+ofstream Log::sFile;
 
 
 /***** Static Public Methods *****/
@@ -9,6 +10,19 @@ void Log::SetLevel(Log::Level level)
 {
 	sLoglevel = level;
 }
+
+void Log::SetLogFile(std::string file)
+{
+	CloseCustomHandle();
+	sFile.open(file.c_str());
+}
+
+void Log::CloseCustomHandle() 
+{
+	if (sFile.is_open()) 
+		sFile.close();
+}
+
 
 void Log::Verbose(std::string format, ...)
 {
@@ -57,7 +71,15 @@ void Log::Write(Level lvl, std::string format, va_list args)
 	if (lvl >= sLoglevel) {
 		char *str = new char[format.length() * 3];
 		vsprintf(str, format.c_str(), args);
-		printf("%s", str);
+
+		if (!sFile.is_open()) {
+			printf("%s\n", str);
+		} else {
+			sFile << str << "\n";
+			sFile.flush();
+			sFile.close();
+		}
+
 		delete[] str;
 	}
 }

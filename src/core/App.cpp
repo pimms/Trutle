@@ -73,6 +73,8 @@ App::~App()
 		delete mController;
 	if (mNextController)
 		delete mNextController;
+
+	Log::CloseCustomHandle();
 }
 
 void App::SetController(Controller *controller)
